@@ -12,26 +12,19 @@ namespace Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class Hall
+    public partial class Republic
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Hall()
+        public Republic()
         {
-            this.PhoneOfHall = new HashSet<PhoneOfHall>();
-            this.Workout = new HashSet<Workout>();
+            this.City = new HashSet<City>();
         }
     
         public int id { get; set; }
-        public string hall_name { get; set; }
-        public string address { get; set; }
-        public string description { get; set; }
-        public int city_id { get; set; }
+        public string name { get; set; }
+        public int country_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhoneOfHall> PhoneOfHall { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Workout> Workout { get; set; }
-        public virtual HallYandexMapLocation HallYandexMapLocation { get; set; }
-        public virtual City City { get; set; }
+        public virtual ICollection<City> City { get; set; }
     }
 }

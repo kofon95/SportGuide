@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace SportGuideASP
 {
@@ -16,6 +20,19 @@ namespace SportGuideASP
         protected void Application_BeginRequest()
         {
             StaticData.Log.Debug("Request user");
+        }
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+
+                string[] roles = ticket.UserData.Split(',');
+
+                Context.User = new GenericPrincipal(new GenericIdentity(ticket.Name), roles);
+            }
         }
     }
 }

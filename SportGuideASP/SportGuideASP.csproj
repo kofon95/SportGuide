@@ -161,8 +161,10 @@
     <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\HelperExtentions.cs" />
     <Compile Include="Core\ViewEntities\Search.cs" />
+    <Compile Include="Core\ViewEntities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -179,6 +181,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Search\Workout.cshtml" />
     <Content Include="Views\Home\Reset.cshtml" />
+    <Content Include="Views\User\SignIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

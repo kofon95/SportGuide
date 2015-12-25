@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="SportGuideContext.Category" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Hall" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.KindOfSport" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="8.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="10.5" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Trainer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Workout" Width="1.5" PointX="5.75" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="SportGuideContext.FK__KindOfSpo__categ__34C8D9D1" ManuallyRouted="false" />
@@ -18,6 +18,18 @@
         <AssociationConnector Association="SportGuideContext.FK__Workout__trainer__03F0984C" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SportGuideContext.HallYandexMapLocation" Width="1.5" PointX="11.375" PointY="0.5" />
         <AssociationConnector Association="SportGuideContext.FK__HallYandexMa__id__3C34F16F" />
+        <EntityTypeShape EntityType="SportGuideContext.City" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="SportGuideContext.Login" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="SportGuideContext.LoginRoles" Width="1.5" PointX="1.125" PointY="10.375" />
+        <EntityTypeShape EntityType="SportGuideContext.Republic" Width="1.5" PointX="10.75" PointY="7.125" />
+        <EntityTypeShape EntityType="SportGuideContext.User" Width="1.5" PointX="4.75" PointY="7" />
+        <EntityTypeShape EntityType="SportGuideContext.UserGender" Width="1.5" PointX="2.875" PointY="7" />
+        <AssociationConnector Association="SportGuideContext.FK__City__republic_i__662B2B3B" />
+        <AssociationConnector Association="SportGuideContext.FK__User__city_id__04AFB25B" />
+        <AssociationConnector Association="SportGuideContext.FK__User__id__05A3D694" />
+        <AssociationConnector Association="SportGuideContext.FK__User__role__7EF6D905" />
+        <AssociationConnector Association="SportGuideContext.FK__User__gender__03BB8E22" />
+        <AssociationConnector Association="SportGuideContext.FK__Hall__city_id__0697FACD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

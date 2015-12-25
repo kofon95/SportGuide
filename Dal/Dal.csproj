@@ -69,6 +69,9 @@
     <Compile Include="Category.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="City.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataManager.cs" />
     <Compile Include="Hall.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
@@ -77,6 +80,12 @@
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="KindOfSport.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginRoles.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PhoneOfHall.cs">
@@ -91,6 +100,9 @@
     <Compile Include="Repository\HallRepository.cs" />
     <Compile Include="Repository\KindOfSportRepository.cs" />
     <Compile Include="Repository\WorkoutRepository.cs" />
+    <Compile Include="Republic.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SportGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,6 +119,12 @@
       <DependentUpon>SportGuideModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Trainer.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGender.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Workout.cs">
