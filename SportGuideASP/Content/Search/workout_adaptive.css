@@ -1,0 +1,17 @@
+﻿@media(max-width: 768px){
+
+.date-of-workout-table th,
+.date-of-workout-table td {
+    display: block;
+    padding: 10px;
+    font-size: 1.7rem;
+    height: 50px;
+    font-weight: 100;
+}
+.date-of-workout-table thead {
+    float: left;
+}
+.date-of-workout-table tbody {
+    float: right;
+}
+}

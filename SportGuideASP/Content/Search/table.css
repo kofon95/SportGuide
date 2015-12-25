@@ -1,0 +1,15 @@
+﻿.records-model{
+    margin: 30px 0px;
+}
+.records-model > thead{
+    background: #EAEAEA;
+}
+.records-model td {
+    padding: 10px;
+}
+.records-model > tbody td {
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.15);
+}
+.model-title{
+    margin: 30px 0px 20px 0px;
+}

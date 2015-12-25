@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SportGuideContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hall_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="HallYandexMapLocation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KindOfSport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sport_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="min_age" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="PhoneOfHall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="24" />
+          <Property Name="hall_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="birthday" Type="date" Nullable="false" />
+          <Property Name="photo_src" Type="nvarchar" MaxLength="256" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="24" />
+        </EntityType>
+        <EntityType Name="Workout">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hall_id" Type="int" Nullable="false" />
+          <Property Name="kind_of_sport_id" Type="int" Nullable="false" />
+          <Property Name="trainer_id" Type="int" Nullable="false" />
+          <Property Name="paiment_for_month" Type="int" Nullable="false" />
+          <Property Name="min_age" Type="smallint" Nullable="false" />
+          <Property Name="max_age" Type="smallint" Nullable="false" />
+          <Property Name="info" Type="nvarchar" MaxLength="256" />
+          <Property Name="time" Type="time" Precision="7" />
+          <Property Name="mon" Type="bit" Nullable="false" />
+          <Property Name="tue" Type="bit" Nullable="false" />
+          <Property Name="wed" Type="bit" Nullable="false" />
+          <Property Name="thu" Type="bit" Nullable="false" />
+          <Property Name="fri" Type="bit" Nullable="false" />
+          <Property Name="sat" Type="bit" Nullable="false" />
+          <Property Name="sun" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__HallYandexMa__id__3C34F16F">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="HallYandexMapLocation" Type="Self.HallYandexMapLocation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HallYandexMapLocation">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KindOfSpo__categ__34C8D9D1">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KindOfSport">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PhoneOfHa__hall___44FF419A">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="PhoneOfHall" Type="Self.PhoneOfHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PhoneOfHall">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__hall_id__02084FDA">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__kind_of__02FC7413">
+          <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KindOfSport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="kind_of_sport_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__trainer__03F0984C">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="trainer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportGuideContextStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HallYandexMapLocation" EntityType="Self.HallYandexMapLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KindOfSport" EntityType="Self.KindOfSport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneOfHall" EntityType="Self.PhoneOfHall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workout" EntityType="Self.Workout" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__HallYandexMa__id__3C34F16F" Association="Self.FK__HallYandexMa__id__3C34F16F">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="HallYandexMapLocation" EntitySet="HallYandexMapLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KindOfSpo__categ__34C8D9D1" Association="Self.FK__KindOfSpo__categ__34C8D9D1">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="KindOfSport" EntitySet="KindOfSport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PhoneOfHa__hall___44FF419A" Association="Self.FK__PhoneOfHa__hall___44FF419A">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="PhoneOfHall" EntitySet="PhoneOfHall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__hall_id__02084FDA" Association="Self.FK__Workout__hall_id__02084FDA">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__kind_of__02FC7413" Association="Self.FK__Workout__kind_of__02FC7413">
+            <End Role="KindOfSport" EntitySet="KindOfSport" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__trainer__03F0984C" Association="Self.FK__Workout__trainer__03F0984C">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SportGuideContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="KindOfSport" Relationship="Self.FK__KindOfSpo__categ__34C8D9D1" FromRole="Category" ToRole="KindOfSport" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hall_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhoneOfHall" Relationship="Self.FK__PhoneOfHa__hall___44FF419A" FromRole="Hall" ToRole="PhoneOfHall" />
+          <NavigationProperty Name="Workout" Relationship="Self.FK__Workout__hall_id__02084FDA" FromRole="Hall" ToRole="Workout" />
+          <NavigationProperty Name="HallYandexMapLocation" Relationship="SportGuideContext.FK__HallYandexMa__id__3C34F16F" FromRole="Hall" ToRole="HallYandexMapLocation" />
+        </EntityType>
+        <EntityType Name="KindOfSport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sport_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="min_age" Type="Byte" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__KindOfSpo__categ__34C8D9D1" FromRole="KindOfSport" ToRole="Category" />
+          <NavigationProperty Name="Workout" Relationship="Self.FK__Workout__kind_of__02FC7413" FromRole="KindOfSport" ToRole="Workout" />
+        </EntityType>
+        <EntityType Name="PhoneOfHall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="phone_number" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Name="hall_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK__PhoneOfHa__hall___44FF419A" FromRole="PhoneOfHall" ToRole="Hall" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="photo_src" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Workout" Relationship="Self.FK__Workout__trainer__03F0984C" FromRole="Trainer" ToRole="Workout" />
+        </EntityType>
+        <EntityType Name="Workout">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hall_id" Type="Int32" Nullable="false" />
+          <Property Name="kind_of_sport_id" Type="Int32" Nullable="false" />
+          <Property Name="trainer_id" Type="Int32" Nullable="false" />
+          <Property Name="paiment_for_month" Type="Int32" Nullable="false" />
+          <Property Name="min_age" Type="Int16" Nullable="false" />
+          <Property Name="max_age" Type="Int16" Nullable="false" />
+          <Property Name="info" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="Time" Precision="7" />
+          <Property Name="mon" Type="Boolean" Nullable="false" />
+          <Property Name="tue" Type="Boolean" Nullable="false" />
+          <Property Name="wed" Type="Boolean" Nullable="false" />
+          <Property Name="thu" Type="Boolean" Nullable="false" />
+          <Property Name="fri" Type="Boolean" Nullable="false" />
+          <Property Name="sat" Type="Boolean" Nullable="false" />
+          <Property Name="sun" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK__Workout__hall_id__02084FDA" FromRole="Workout" ToRole="Hall" />
+          <NavigationProperty Name="KindOfSport" Relationship="Self.FK__Workout__kind_of__02FC7413" FromRole="Workout" ToRole="KindOfSport" />
+          <NavigationProperty Name="Trainer" Relationship="Self.FK__Workout__trainer__03F0984C" FromRole="Workout" ToRole="Trainer" />
+        </EntityType>
+        <Association Name="FK__KindOfSpo__categ__34C8D9D1">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KindOfSport">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PhoneOfHa__hall___44FF419A">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="PhoneOfHall" Type="Self.PhoneOfHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PhoneOfHall">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__hall_id__02084FDA">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__kind_of__02FC7413">
+          <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KindOfSport">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="kind_of_sport_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workout__trainer__03F0984C">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
+          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="trainer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportGuideEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" />
+          <EntitySet Name="KindOfSport" EntityType="Self.KindOfSport" />
+          <EntitySet Name="PhoneOfHall" EntityType="Self.PhoneOfHall" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" />
+          <EntitySet Name="Workout" EntityType="Self.Workout" />
+          <AssociationSet Name="FK__KindOfSpo__categ__34C8D9D1" Association="Self.FK__KindOfSpo__categ__34C8D9D1">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="KindOfSport" EntitySet="KindOfSport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PhoneOfHa__hall___44FF419A" Association="Self.FK__PhoneOfHa__hall___44FF419A">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="PhoneOfHall" EntitySet="PhoneOfHall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__hall_id__02084FDA" Association="Self.FK__Workout__hall_id__02084FDA">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__kind_of__02FC7413" Association="Self.FK__Workout__kind_of__02FC7413">
+            <End Role="KindOfSport" EntitySet="KindOfSport" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workout__trainer__03F0984C" Association="Self.FK__Workout__trainer__03F0984C">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
+          <EntitySet Name="HallYandexMapLocation" EntityType="SportGuideContext.HallYandexMapLocation" />
+          <AssociationSet Name="FK__HallYandexMa__id__3C34F16F" Association="SportGuideContext.FK__HallYandexMa__id__3C34F16F">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="HallYandexMapLocation" EntitySet="HallYandexMapLocation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="HallYandexMapLocation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="longitude" Type="Double" Nullable="false" />
+          <Property Name="latitude" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Hall" Relationship="SportGuideContext.FK__HallYandexMa__id__3C34F16F" FromRole="HallYandexMapLocation" ToRole="Hall" />
+        </EntityType>
+        <Association Name="FK__HallYandexMa__id__3C34F16F">
+          <End Type="SportGuideContext.Hall" Role="Hall" Multiplicity="1" />
+          <End Type="SportGuideContext.HallYandexMapLocation" Role="HallYandexMapLocation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HallYandexMapLocation">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SportGuideContextStoreContainer" CdmEntityContainer="SportGuideEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="SportGuideContext.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hall">
+            <EntityTypeMapping TypeName="SportGuideContext.Hall">
+              <MappingFragment StoreEntitySet="Hall">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hall_name" ColumnName="hall_name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KindOfSport">
+            <EntityTypeMapping TypeName="SportGuideContext.KindOfSport">
+              <MappingFragment StoreEntitySet="KindOfSport">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sport_name" ColumnName="sport_name" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="min_age" ColumnName="min_age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneOfHall">
+            <EntityTypeMapping TypeName="SportGuideContext.PhoneOfHall">
+              <MappingFragment StoreEntitySet="PhoneOfHall">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="hall_id" ColumnName="hall_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainer">
+            <EntityTypeMapping TypeName="SportGuideContext.Trainer">
+              <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="photo_src" ColumnName="photo_src" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workout">
+            <EntityTypeMapping TypeName="SportGuideContext.Workout">
+              <MappingFragment StoreEntitySet="Workout">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hall_id" ColumnName="hall_id" />
+                <ScalarProperty Name="kind_of_sport_id" ColumnName="kind_of_sport_id" />
+                <ScalarProperty Name="trainer_id" ColumnName="trainer_id" />
+                <ScalarProperty Name="paiment_for_month" ColumnName="paiment_for_month" />
+                <ScalarProperty Name="min_age" ColumnName="min_age" />
+                <ScalarProperty Name="max_age" ColumnName="max_age" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="mon" ColumnName="mon" />
+                <ScalarProperty Name="tue" ColumnName="tue" />
+                <ScalarProperty Name="wed" ColumnName="wed" />
+                <ScalarProperty Name="thu" ColumnName="thu" />
+                <ScalarProperty Name="fri" ColumnName="fri" />
+                <ScalarProperty Name="sat" ColumnName="sat" />
+                <ScalarProperty Name="sun" ColumnName="sun" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HallYandexMapLocation">
+            <EntityTypeMapping TypeName="SportGuideContext.HallYandexMapLocation">
+              <MappingFragment StoreEntitySet="HallYandexMapLocation">
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

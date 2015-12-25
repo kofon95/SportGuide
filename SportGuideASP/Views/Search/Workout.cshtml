@@ -1,0 +1,113 @@
+﻿@model SportGuideASP.Core.ViewEntities.Search.Workout
+
+<link href="~/Content/Search/workout.css" rel="stylesheet" />
+<link href="~/Content/Search/workout_adaptive.css" rel="stylesheet" />
+
+<script>
+    function addScript(src, async) {
+        var script = document.createElement("script");
+        script.src = src;
+        if (async) script.async = true;
+        document.body.appendChild(script)
+    }
+    setTimeout(function() {
+        addScript("//api-maps.yandex.ru/2.1/?lang=ru_RU")
+    }, 1);
+</script>
+
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+@*<script src="//api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>*@
+@*<script src="https://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU"  type="text/javascript"></script>*@
+
+@{
+    ViewBag.Title = Model.HallName;
+}
+
+<div class="kind-of-sport">
+    @Model.KindOfSport
+</div>
+
+<div class="trainer-container">
+    Введёт: <span class="trainer-name">@Model.TrainerName</span>
+    <img class="trainer-picture" title="Изобрж." src="@Model.TrainerImageSource" />
+    <div class="phone-container">
+        <span>Тел.:</span>
+        <span class="phone-number">@Model.TrainersPhoneNumber</span>
+    </div>
+</div>
+
+<div class="time-of-workout">
+    <span>Тренировки проводятся в</span>
+    <span>@(new DateTime(Model.TimeForWorkout.Value.Ticks).ToShortTimeString())</span>
+</div>
+
+<div class="day-of-week-container">
+    <div class="day-of-week-title">Дни недели</div>
+    @{
+        string yes = "class=\"yes\"";
+        string no = "class=\"no\"";
+    }
+    <table class="date-of-workout-table">
+        <tbody>
+            <tr class="day-of-week">
+                <td @((Model.DateMonday ? yes : no).ToJSString())>Понедельник</td>
+                <td @((Model.DateTuesday ? yes : no).ToJSString())>Вторник</td>
+                <td @((Model.DateWednesday ? yes : no).ToJSString())>Среда</td>
+                <td @((Model.DateThursday ? yes : no).ToJSString())>Четверг</td>
+                <td @((Model.DateFriday ? yes : no).ToJSString())>Пятница</td>
+                <td @((Model.DateSaturday ? yes : no).ToJSString())>Суббота</td>
+                <td @((Model.DateSunday ? yes : no).ToJSString())>Воскресенье</td>
+            </tr>
+        </tbody>
+    </table>
+</div>@*END DAYS*@
+
+<div class="address">
+    <div class="address-text">
+        <span>Адрес</span>
+        <span>@Model.Address</span>
+    </div>
+    <div class="address-map map-closed">
+        <span id="toggle-map" class="show-map">Щелкните, для открытия карты</span>
+        <div id="map" style="width: 100%; height: 90%;" class="map yandex-map">
+            
+        </div>
+    </div>
+    <!--Yandex map-->
+    <script>
+        var yaMap;
+        var test
+        !function () {
+            window.addEventListener("load", function () {
+                var coords = [@Model.Latitude.ToString().Replace(',', '.'), @Model.Longitude.ToString().Replace(',', '.')];
+                ymaps.ready(function () {
+                    yaMap = new ymaps.Map('map', {
+                        // При инициализации карты обязательно нужно указать
+                        // её центр и коэффициент масштабирования.
+                        center: coords,
+                        zoom: 14
+                    }, {
+                        searchControlProvider: 'yandex#search'
+                    });
+
+                    var placeMark = new ymaps.Placemark(coords, {
+                        balloonContentBody: '<div class="map-info">' + "@Model.HallName" + '</div>'
+                    }, {
+                        preset: "islands#redDotIcon"
+                    });
+                    yaMap.geoObjects.add(placeMark);
+                })
+
+
+                //yaMap.destroy();
+            });
+
+            var toggleMap = $("#toggle-map");
+            toggleMap.on("click", function () {
+                toggleMap.parent()
+                    .removeClass("map-closed")
+                    .addClass("map-opened");
+            });
+        }()
+    </script>
+</div>

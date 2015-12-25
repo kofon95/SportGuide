@@ -1,0 +1,31 @@
+﻿@model IQueryable<SportGuideASP.Core.ViewEntities.Search.Index>
+@{
+    ViewBag.Title = "Главная страница";
+}
+<link href="/Content/Search/table.css" rel="stylesheet" />
+
+<h2>Занятия</h2>
+
+<table class="records-model">
+    <thead>
+        <tr>
+            <td>Переход</td>
+            <td>Категория спорта</td>
+            <td>Вид спорта</td>
+            <td>Время занятий</td>
+            <td>Прочая информация</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var workout in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink("Посмотреть", "Workout", new { workout.Id })</td>
+                <td>@workout.KindOfSport</td>
+                <td>@workout.CategoryName</td>
+                <td>@workout.TimeForWorkout</td>
+                <td>@workout.OtherInformation</td>
+            </tr>
+        }
+    </tbody>
+</table>

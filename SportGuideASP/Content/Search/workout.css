@@ -1,0 +1,85 @@
+﻿.container.body-content{
+    text-align: center;
+}
+.body-content > *{
+    margin: 30px auto;
+}
+.kind-of-sport{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.trainer-container{
+    font-size: 2rem;
+}
+.trainer-picture{
+    height: 200px;
+    width: 150px;
+    display: block;
+    margin: 10px auto 0px auto;
+}
+.trainer-name{
+    font-weight: bold;
+}
+.phone-container{
+    font-size: 1.5rem;
+    margin: 10px auto;
+    color: #BA9048;
+}
+.time-of-workout{
+    color: #7C6BDE;
+    font-size: 1.6rem;
+}
+.day-of-week-container{
+    margin-top: 50px;
+}
+.day-of-week-container > *{
+    margin: 0 auto;
+}
+.day-of-week-title{
+    font-size: 2rem;
+}
+.date-of-workout-table td{
+    padding: 10px;
+    min-width: 100px;
+    cursor: default;
+}
+.date-of-workout-table .yes{
+    color: #5D82EB;
+    font-size: 120%;
+    transition: text-shadow 50ms;
+}
+.date-of-workout-table .yes:hover{
+    text-shadow: 0px 0px 1px black;
+}
+.date-of-workout-table .no{
+    color: rgba(136, 136, 136, 0.4);
+}
+.address-text{
+    margin: 50px;
+    font-size: 120%;
+}
+.show-map{
+    cursor:pointer;
+    color: #818181;
+    font-size: 2rem;
+    text-shadow: 0px 2px 16px black;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.map-closed > .map{
+    display: none;
+}
+.map-opened > .show-map{
+    display: none;
+}
+
+
+
+/*Yandex map*/
+.yandex-map > *{
+    height: 400px !important;
+    width: 100% !important;
+}
+/*END Yandex map*/

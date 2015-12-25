@@ -1,0 +1,39 @@
+﻿@media(min-width: 768px) {
+    .navbar-collapse {
+        position: absolute;
+        right: 0;
+    }
+}
+@media(max-width: 768px) {
+    body{
+        padding: 0;
+    }
+    .body-content{
+        margin: 0px;
+    }
+    .navbar.navbar-inverse{
+        position: static;
+    }
+    .navbar-header{
+        width: 100%;
+    }
+    .search{
+        margin-top: 50px;
+    }
+    .search-btn{
+        display: block;
+        margin: 0px auto 20px auto;
+        width: 50%;
+    }
+    .wrapper-select{
+        float: left;
+    }
+    .form-group.no-active > .search,
+    .form-group.active > .search{
+        width: 100%;
+        margin: 1em;
+    }
+}
+.nav,.navbar-nav{
+    text-align: center;
+}

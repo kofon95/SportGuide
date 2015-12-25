@@ -1,0 +1,9 @@
+﻿@model IQueryable<Dal.KindOfSport>
+
+<select name="kindOfSportId">
+    <option value="">Любой</option>
+@foreach (var cat in Model)
+{
+    <option value="@cat.id">@cat.sport_name</option>
+}
+</select>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="01d4d3ceb8b54ca88a2b60f96be28440" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="SportGuideContext.Category" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.Hall" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.KindOfSport" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="8.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.Trainer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.Workout" Width="1.5" PointX="5.75" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="SportGuideContext.FK__KindOfSpo__categ__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="SportGuideContext.FK__PhoneOfHa__hall___44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="SportGuideContext.FK__Workout__hall_id__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="SportGuideContext.FK__Workout__kind_of__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="SportGuideContext.FK__Workout__trainer__03F0984C" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SportGuideContext.HallYandexMapLocation" Width="1.5" PointX="11.375" PointY="0.5" />
+        <AssociationConnector Association="SportGuideContext.FK__HallYandexMa__id__3C34F16F" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

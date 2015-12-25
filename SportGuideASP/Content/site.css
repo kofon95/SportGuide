@@ -1,0 +1,56 @@
+﻿
+/*Global*/
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 80px;
+}
+
+/*override bootstrap*/
+.btn,.form-control{
+    font-size: 1.4rem;
+}
+
+.container{
+    margin-bottom: 10px;
+}
+.wrapper-select > select{
+    font-size: 1.5rem;
+}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
+    background-color: #B5B5B5;
+}
+.navbar-inverse{
+    background-color: #EEEEEE;
+}
+.select-sport-category{
+    display: inline-block;
+}
+.navbar-brand{
+    transition: .1s;
+}
+.navbar-inverse .navbar-brand:hover{
+    color: white;
+    text-shadow: 0px 0px 9px rgba(0, 0, 0, 0.5);
+}
+.navbar-header{
+    width: 400px;
+}
+.form-group .search{
+    transition: width .5s;
+    width: 300px;
+}
+.form-group > :first-child{
+    margin-bottom: .4em;
+}
+.form-group.no-active .search {
+    /*width: 260px;*/
+}
