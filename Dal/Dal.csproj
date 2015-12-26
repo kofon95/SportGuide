@@ -72,6 +72,8 @@
     <Compile Include="City.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\RepublicRepository.cs" />
+    <Compile Include="Repository\CityRepository.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Hall.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
@@ -85,6 +87,8 @@
     <Compile Include="Login.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="LoginRoles.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>

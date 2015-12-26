@@ -1,5 +1,5 @@
 ﻿using Dal;
-using SportGuideASP.Core.ViewEntities;
+using SportGuideASP.Core.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -34,7 +34,7 @@ namespace SportGuideASP.Controllers
             var model = from w in workouts
                        join k in _dm.KindOfSport.GetAll() on w.kind_of_sport_id equals k.id
                        join c in _dm.Category.GetAll() on k.category_id equals c.id
-                       select new Search.Index
+                       select new SearchViewModel.Index
                        {
                            Id = w.id,
                            CategoryName = c.category_name,
@@ -56,7 +56,7 @@ namespace SportGuideASP.Controllers
                         join t in _dm.Trainer.GetAll() on w.trainer_id equals t.id
                         join h in _dm.Hall.GetAll() on w.hall_id equals h.id
                         join m in _dm.HallYandexMapLocation.GetAll() on h.id equals m.id
-                        select new Search.Workout
+                        select new SearchViewModel.Workout
                         {
                             Id = w.id,
                             TimeForWorkout = w.time,

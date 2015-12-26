@@ -1,0 +1,12 @@
+﻿.validation-message{
+	margin-top: 4px;
+}
+.form-content{
+	margin-bottom: 100px;
+}
+.input-submit-wrapper{
+	margin-top: 30px;
+}
+.input-submit-wrapper > input {
+	min-width: 100%;
+}

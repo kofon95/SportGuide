@@ -92,7 +92,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="birthday" Type="date" />
           <Property Name="gender" Type="char" MaxLength="1" />
@@ -186,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__city_id__04AFB25B">
+        <Association Name="FK__User__city_id__1C873BEC">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,7 +198,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__gender__03BB8E22">
+        <Association Name="FK__User__gender__1B9317B3">
           <End Role="UserGender" Type="Self.UserGender" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,7 +210,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__id__05A3D694">
+        <Association Name="FK__User__id__1D7B6025">
           <End Role="Login" Type="Self.Login" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -304,15 +304,15 @@
             <End Role="Hall" EntitySet="Hall" />
             <End Role="PhoneOfHall" EntitySet="PhoneOfHall" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__city_id__04AFB25B" Association="Self.FK__User__city_id__04AFB25B">
+          <AssociationSet Name="FK__User__city_id__1C873BEC" Association="Self.FK__User__city_id__1C873BEC">
             <End Role="City" EntitySet="City" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__gender__03BB8E22" Association="Self.FK__User__gender__03BB8E22">
+          <AssociationSet Name="FK__User__gender__1B9317B3" Association="Self.FK__User__gender__1B9317B3">
             <End Role="UserGender" EntitySet="UserGender" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__id__05A3D694" Association="Self.FK__User__id__05A3D694">
+          <AssociationSet Name="FK__User__id__1D7B6025" Association="Self.FK__User__id__1D7B6025">
             <End Role="Login" EntitySet="Login" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>

@@ -7,6 +7,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/site_adaptive.css" rel="stylesheet" type="text/css" />
+	@RenderSection("Styles", false)
     <script src="~/Scripts/url.manager.js"></script>
     <script src="~/Scripts/jquery-2.1.3.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -16,6 +17,7 @@
     <script src="~/Scripts/common.js"></script>
     <script src="~/Scripts/init.js"></script>
     <script src="~/Scripts/filter_ajax.js"></script>
+	@RenderSection("Scripts", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -72,7 +74,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Личный кабинет", "Private", "User")</li>
+					<li>@(User.Identity.IsAuthenticated ?
+										Html.ActionLink("Выход", "SignOut", "User") :
+										Html.ActionLink("Вход", "SignIn", "User"))</li>
+                    <li>@Html.ActionLink("Регистрация", "Register", "User")</li>
                     <li>@Html.ActionLink("О проекте", "About", "Home")</li>
                 </ul>
             </div>

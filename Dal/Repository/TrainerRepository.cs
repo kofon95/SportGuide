@@ -2,7 +2,7 @@
 
 namespace Dal.Repository
 {
-    class TrainerRepository : IRepository<Trainer, int>
+    internal class TrainerRepository : IRepository<Trainer, int>
     {
         SportGuideEntities _ctx;
         

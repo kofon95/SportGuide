@@ -2,7 +2,7 @@
 
 namespace Dal.Repository
 {
-    class HallRepository : IRepository<Hall, int>
+    internal class HallRepository : IRepository<Hall, int>
     {
         SportGuideEntities _ctx;
 
@@ -34,6 +34,7 @@ namespace Dal.Repository
             updating.address = entity.address;
             updating.description = entity.description;
             updating.hall_name = entity.hall_name;
+            updating.city_id = entity.city_id;
 
             _ctx.SaveChanges();
         }

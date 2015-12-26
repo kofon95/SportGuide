@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SportGuideASP.Core.ViewEntities
+namespace SportGuideASP.Core.ViewModels
 {
-    public class Search
+    public class SearchViewModel
     {
         public class Index
         {

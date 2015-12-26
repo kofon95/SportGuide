@@ -15,11 +15,12 @@ namespace SportGuideASP
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            StaticData.Log.Info("Start application");
             StaticData.Reset();
         }
         protected void Application_BeginRequest()
         {
-            StaticData.Log.Debug("Request user");
+            StaticData.Log.Trace("Request user");
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {

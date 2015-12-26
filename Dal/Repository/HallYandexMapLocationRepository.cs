@@ -2,7 +2,7 @@
 
 namespace Dal.Repository
 {
-    class HallYandexMapLocationRepository : IRepository<HallYandexMapLocation, int>
+    internal class HallYandexMapLocationRepository : IRepository<HallYandexMapLocation, int>
     {
         SportGuideEntities _ctx;
 

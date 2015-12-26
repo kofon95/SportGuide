@@ -1,4 +1,5 @@
 ﻿using Dal.Repository;
+using System.Data.Entity;
 
 namespace Dal
 {
@@ -12,6 +13,50 @@ namespace Dal
         }
 
         #region Lazy load
+
+        private IRepository<Login, int> _login;
+        public IRepository<Login, int> Login
+        {
+            get
+            {
+                if (_login == null)
+                    _login = new LoginRepository(_ctx);
+                return _login;
+            }
+        }
+
+        private IRepository<User, int> _user;
+        public IRepository<User, int> User
+        {
+            get
+            {
+                if (_user == null)
+                    _user = new UserRepository(_ctx);
+                return _user;
+            }
+        }
+
+        private IRepository<City, int> _city;
+        public IRepository<City, int> City
+        {
+            get
+            {
+                if (_city == null)
+                    _city = new CityRepository(_ctx);
+                return _city;
+            }
+        }
+
+        private IRepository<Republic, int> _republic;
+        public IRepository<Republic, int> Republic
+        {
+            get
+            {
+                if (_republic == null)
+                    _republic = new RepublicRepository(_ctx);
+                return _republic;
+            }
+        }
 
         private IRepository<Workout, int> _workout;
         public IRepository<Workout, int> Workout

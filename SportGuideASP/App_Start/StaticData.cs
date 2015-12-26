@@ -11,7 +11,7 @@ namespace SportGuideASP
 
         public static void Reset()
         {
-            Log.Trace("Reset categories data");
+            Log.Debug("Reset categories data");
             _categories = null;
         }
 

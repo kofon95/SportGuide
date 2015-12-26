@@ -2,7 +2,7 @@
 
 namespace Dal.Repository
 {
-    class PhoneOfHallRepository : IRepository<PhoneOfHall, int>
+    internal class PhoneOfHallRepository : IRepository<PhoneOfHall, int>
     {
         SportGuideEntities _ctx;
 

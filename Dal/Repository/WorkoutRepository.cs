@@ -2,7 +2,7 @@
 
 namespace Dal.Repository
 {
-    class WorkoutRepository : IRepository<Workout, int>
+    internal class WorkoutRepository : IRepository<Workout, int>
     {
         SportGuideEntities _ctx;
         public WorkoutRepository(SportGuideEntities ctx)
