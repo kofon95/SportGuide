@@ -2,9 +2,9 @@
 
 namespace SportGuideASP.Controllers
 {
-    public class HomeController : Controller
+    public class CommonController : Controller
     {
-        // GET: Home
+        // Start page
         public ActionResult Index()
         {
             return View();

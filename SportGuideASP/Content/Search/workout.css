@@ -78,8 +78,9 @@
 
 
 /*Yandex map*/
-.yandex-map > *{
-    height: 400px !important;
+/* !important - yandex script self add style */
+.yandex-map, .yandex-map > *{
+    height: 550px !important;
     width: 100% !important;
 }
 /*END Yandex map*/

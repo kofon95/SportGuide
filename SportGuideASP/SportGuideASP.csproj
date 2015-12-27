@@ -169,7 +169,7 @@
     <Compile Include="App_Start\StaticData.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\APIController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\HelperExtentions.cs" />
@@ -193,10 +193,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\API\GetKindsOfSportByCategoryId.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Common\About.cshtml" />
+    <Content Include="Views\Common\Index.cshtml" />
     <Content Include="Views\Search\Workout.cshtml" />
-    <Content Include="Views\Home\Reset.cshtml" />
+    <Content Include="Views\Common\Reset.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <None Include="Web.Debug.config">
@@ -209,6 +209,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Workout\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj">
