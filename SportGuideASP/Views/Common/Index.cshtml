@@ -2,13 +2,14 @@
     ViewBag.Title = "SportGuide - Главная страница";
 }
 
-<h1 style="text-align:center;">SportGuide</h1>
+<h1 style="text-align:center;">Главная страница - SportGuide</h1>
+<hr />
+
+@if (User.Identity.IsAuthenticated)
+{
+	<div>Ваш id: <b>@User.Identity.Name</b></div>
+}
 
 <div>
-    Главная страница - @User.Identity.Name
-</div>
-Мы поможем вам в спорте. От нас выходило не мало спортсменов, бла бла бла...
-<div>
-	@{
-	}
+	Это главная страница будущего сайта, если вы читаете этот текст, то скорее всего дизайн ещё не "пригнали"
 </div>

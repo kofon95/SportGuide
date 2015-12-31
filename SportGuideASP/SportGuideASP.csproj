@@ -125,7 +125,7 @@
     <Content Include="Content\site.css" />
     <Content Include="Content\site_adaptive.css" />
     <Content Include="Content\User\site.css" />
-    <Content Include="Core\Util\Private\check this file in github.txt" />
+    <Content Include="error.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

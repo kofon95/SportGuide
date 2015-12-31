@@ -57,13 +57,40 @@
 		el.type = "text/javascript";
 		el.src = "//vk.com/js/api/openapi.js";
 		el.async = true;
-		document.getElementById("vk_api_transport").appendChild(el);
+		document.getElementById("vk_api_transport")
+			.appendChild(el)
+			.addEventListener("load", function() {
+				document.getElementById("vk-login").addEventListener("click", function() {
+					VK.Auth.login(function(e) {
+						test = e
+					}, 4194304);
+				})
 
-		document.getElementById("vk-login").addEventListener("click", function() {
-			VK.Auth.login(function() {
+				VK.Observer.subscribe("auth.login", function(e){
+					// on login
+				});
 
-			}, 4194304);
-		})
+				VK.Observer.subscribe("auth.statusChange", function(e){
+					// on status change
+				})
+
+				VK.Observer.subscribe("auth.sessionChange", function(e){
+					console.info("sessionChange", e)
+					if (!e.session || e.settings === undefined)
+						return;
+
+					var u = e.session.user;
+					var url = "/User/AuthVK?uid=" + u.id +
+							  "&first_name=" + u.first_name +
+							  "&last_name=" + u.last_name
+
+					location.href = url;
+				})
+
+				VK.Observer.subscribe("auth.logout", function(e){
+					// on logout
+				})
+			});
 	}, 0);
 
 	//VK.UI.button('vk-login');

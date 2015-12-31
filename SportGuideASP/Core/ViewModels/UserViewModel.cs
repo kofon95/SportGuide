@@ -27,7 +27,7 @@ namespace SportGuideASP.Core.ViewModels
             public string Name { get; set; }
         }
 
-        public class RegisterVK
+        public class UserVK
         {
             public int uid { get; set; }
             public string first_name { get; set; }

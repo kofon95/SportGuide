@@ -70,36 +70,43 @@ namespace SportGuideASP.Controllers
             return Redirect(ReturnUrl);
         }
 
-        public ActionResult SignIn_VK(LoginSocialNetwork vkLogin)
+        public ActionResult AuthVK(UserViewModel.UserVK vkLogin)
         {
+            #region Check cookie
+
             try
             {
                 string cookie = Request.Cookies[VK.CookieName]?.Value;
-                if (VK.CookieIsValid(cookie))
-                {
-                    var login = _dm.LoginSocialNetwork.GetAll()
-                        .SingleOrDefault(t => t.network_name == "VK" && t.uid_sn == vkLogin.uid_sn);
-                    AuthenticateUser(login.id, _defaultRole);
-                }
-                else
+                if (!VK.CookieIsValid(cookie))
                     throw new ValueOfCookieException("Wrong cookie's value: \"" + cookie + "\"");
             }
             catch (ValueOfCookieException e)
             {
                 Log.Error(e.Message);
+                return Redirect("/error.html#" + e.Message);
             }
 
-            return Redirect(ReturnUrl);
-        }
-        public ActionResult Register_VK(UserViewModel.RegisterVK vkLogin)
-        {
-            if (_dm.LoginSocialNetwork.GetAll()
-                .FirstOrDefault(t => t.network_name == "VK" && t.uid_sn == vkLogin.uid) != null)
+            #endregion
+
+            var user = _dm.LoginSocialNetwork.GetAll()
+                .FirstOrDefault(t => t.network_name == "VK" &&
+                                t.uid_sn == vkLogin.uid);
+            if (user == null)
             {
-                Log.Error("Such user already exists - " + vkLogin.uid);
-                return RedirectToAction("Register");
+                // Registration
+                var registeredUser = Register_VK(vkLogin);
+                AuthenticateUser(registeredUser.id, registeredUser.role);
+            }
+            else
+            {
+                // Log in
+                AuthenticateUser(user.id, _defaultRole);
             }
 
+            return Redirect(FormsAuthentication.DefaultUrl);
+        }
+        private User Register_VK(UserViewModel.UserVK vkLogin)
+        {
             var savedUser = _dm.User.Save(new User
             {
                 name = vkLogin.first_name + " " + vkLogin.last_name,
@@ -118,8 +125,7 @@ namespace SportGuideASP.Controllers
                 uid_sn = vkLogin.uid,
             });
 
-            AuthenticateUser(savedUser.id, savedUser.role);
-            return Redirect(ReturnUrl);
+            return savedUser;
         }
 
         private void AuthenticateUser(int userId, string roles)
@@ -176,16 +182,16 @@ namespace SportGuideASP.Controllers
             });
             var login = _dm.Login.Save(new Login
             {
-                id= saveUser.id,
-                email =user.Email,
-                password=user.Password,
+                id = saveUser.id,
+                email = user.Email,
+                password = user.Password,
             });
 
             AuthenticateUser(login.id, saveUser.role);
-            
+
             return Redirect(ReturnUrl);
         }
-
+        
         private string IpAddress { get { return Request.ServerVariables["REMOTE_ADDR"]; } }
 
         public string ReturnUrl
