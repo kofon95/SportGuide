@@ -21,7 +21,7 @@ namespace SportGuideASP
             get
             {
                 if (_categories == null)
-                    _categories = new DataManager().Category.GetAll().ToArray();
+                    _categories = new DataManager().Category.GetAll().OrderBy(t => t.category_name).ToArray();
                 return _categories;
             }
         }

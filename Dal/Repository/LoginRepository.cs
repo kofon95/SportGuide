@@ -6,7 +6,6 @@ namespace Dal.Repository
     internal class LoginRepository : IRepository<Login, int>
     {
         private SportGuideEntities _ctx;
-        private const string _defaultRole = "User";
 
         public LoginRepository(SportGuideEntities _ctx)
         {
@@ -25,7 +24,6 @@ namespace Dal.Repository
 
         public Login Save(Login entity)
         {
-            if (entity.role == null) entity.role = _defaultRole;
             var added = _ctx.Login.Add(entity);
             _ctx.SaveChanges();
             return added;
@@ -36,7 +34,6 @@ namespace Dal.Repository
             var updating = _ctx.Login.Single(t => t.id == entity.id);
             updating.email = entity.email;
             updating.password = entity.password;
-            updating.role = entity.role;
 
             _ctx.SaveChanges();
         }

@@ -101,9 +101,7 @@
 	</script>
 </div>
 
-<div class="vk-comments">
-	@*Here is a vk comments*@
-</div>
+<div id="vk-comments"></div>
 
 
 @section Styles{
@@ -122,7 +120,20 @@
 		addScript("//api-maps.yandex.ru/2.1/?lang=ru_RU", true)
 	}, 1);
 </script>
+
+@*VK comments*@
+<script type="text/javascript">
+VK.Widgets.Comments("vk-comments", {limit: 10, width: "665", attach: "*"}, "Workout/@Model.Id");
+</script>
+@*VK comments END*@
+
 @section Scripts{
+@*VK comments*@
+	<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
+	<script type="text/javascript">
+		VK.init({ apiId: 5207878, onlyWidgets: true });
+	</script>
+@*VK comments END*@
 	@*<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" async type="text/javascript"></script>*@
 	@*<script src="//api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>*@
 	@*<script src="https://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU"  type="text/javascript"></script>*@

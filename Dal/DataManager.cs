@@ -36,6 +36,17 @@ namespace Dal
             }
         }
 
+        private IRepository<LoginSocialNetwork, int> _loginSocialNetwork;
+        public IRepository<LoginSocialNetwork, int> LoginSocialNetwork
+        {
+            get
+            {
+                if (_loginSocialNetwork == null)
+                    _loginSocialNetwork = new LoginSocialNetworkRepository(_ctx);
+                return _loginSocialNetwork;
+            }
+        }
+
         private IRepository<City, int> _city;
         public IRepository<City, int> City
         {

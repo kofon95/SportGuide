@@ -40,10 +40,10 @@
                             <span class="wrapper-select">
                                 <select id="sport-category" name="categoryId" class="select-sport-category">
                                     <option value="">Любая категория</option>
-                                    @foreach (var cat in StaticData.Categories.OrderBy(t => t.category_name))
+                                    @*@foreach (var cat in StaticData.Categories)
                                     {
                                         <option value="@cat.id">@cat.category_name</option>
-                                    }
+                                    }*@
                                 </select>
                             </span>
                             <span id="kind-of-sport-container" class="wrapper-select"></span>

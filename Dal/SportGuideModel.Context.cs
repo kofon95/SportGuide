@@ -33,10 +33,12 @@ namespace Dal
         public virtual DbSet<Workout> Workout { get; set; }
         public virtual DbSet<HallYandexMapLocation> HallYandexMapLocation { get; set; }
         public virtual DbSet<City> City { get; set; }
-        public virtual DbSet<Login> Login { get; set; }
-        public virtual DbSet<LoginRoles> LoginRoles { get; set; }
         public virtual DbSet<Republic> Republic { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserGender> UserGender { get; set; }
+        public virtual DbSet<LoginSocialNetwork> LoginSocialNetwork { get; set; }
+        public virtual DbSet<SocialNetwork> SocialNetwork { get; set; }
+        public virtual DbSet<UserRoles> UserRoles { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
     }
 }

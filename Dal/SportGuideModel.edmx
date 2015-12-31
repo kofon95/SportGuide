@@ -51,16 +51,17 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="role" Type="nvarchar" MaxLength="16" Nullable="false" />
         </EntityType>
-        <EntityType Name="LoginRoles">
+        <EntityType Name="LoginSocialNetwork">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="network_name" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="uid_sn" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PhoneOfHall">
           <Key>
@@ -78,6 +79,13 @@
           <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="country_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SocialNetwork">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="64" />
+        </EntityType>
         <EntityType Name="Trainer">
           <Key>
             <PropertyRef Name="id" />
@@ -92,11 +100,14 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="birthday" Type="date" />
           <Property Name="gender" Type="char" MaxLength="1" />
+          <Property Name="photo_src" Type="nvarchar" MaxLength="1000" />
+          <Property Name="photo_is_local" Type="bit" Nullable="false" />
           <Property Name="city_id" Type="int" />
+          <Property Name="role" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="first_ip" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserGender">
@@ -104,6 +115,12 @@
             <PropertyRef Name="gender" />
           </Key>
           <Property Name="gender" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <EntityType Name="Workout">
           <Key>
@@ -174,6 +191,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Login__id__52E34C9D">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginSoci__netwo__3DE82FB7">
+          <End Role="SocialNetwork" Type="Self.SocialNetwork" Multiplicity="1" />
+          <End Role="LoginSocialNetwork" Type="Self.LoginSocialNetwork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialNetwork">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="LoginSocialNetwork">
+              <PropertyRef Name="network_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginSocialN__id__53D770D6">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LoginSocialNetwork" Type="Self.LoginSocialNetwork" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LoginSocialNetwork">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PhoneOfHa__hall___6CD828CA">
           <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
           <End Role="PhoneOfHall" Type="Self.PhoneOfHall" Multiplicity="*" />
@@ -186,7 +239,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__city_id__1C873BEC">
+        <Association Name="FK__User__city_id__4B422AD5">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,7 +251,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__gender__1B9317B3">
+        <Association Name="FK__User__gender__4A4E069C">
           <End Role="UserGender" Type="Self.UserGender" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,26 +263,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__id__1D7B6025">
-          <End Role="Login" Type="Self.Login" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <Association Name="FK__User__role__4C364F0E">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Login">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__User__role__7EF6D905">
-          <End Role="LoginRoles" Type="Self.LoginRoles" Multiplicity="1" />
-          <End Role="Login" Type="Self.Login" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginRoles">
+            <Principal Role="UserRoles">
               <PropertyRef Name="name" />
             </Principal>
-            <Dependent Role="Login">
+            <Dependent Role="User">
               <PropertyRef Name="role" />
             </Dependent>
           </ReferentialConstraint>
@@ -277,12 +318,14 @@
           <EntitySet Name="HallYandexMapLocation" EntityType="Self.HallYandexMapLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KindOfSport" EntityType="Self.KindOfSport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LoginRoles" EntityType="Self.LoginRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginSocialNetwork" EntityType="Self.LoginSocialNetwork" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneOfHall" EntityType="Self.PhoneOfHall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Republic" EntityType="Self.Republic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SocialNetwork" EntityType="Self.SocialNetwork" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGender" EntityType="Self.UserGender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workout" EntityType="Self.Workout" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__City__republic_i__662B2B3B" Association="Self.FK__City__republic_i__662B2B3B">
             <End Role="Republic" EntitySet="Republic" />
@@ -300,25 +343,33 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="KindOfSport" EntitySet="KindOfSport" />
           </AssociationSet>
+          <AssociationSet Name="FK__Login__id__52E34C9D" Association="Self.FK__Login__id__52E34C9D">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginSoci__netwo__3DE82FB7" Association="Self.FK__LoginSoci__netwo__3DE82FB7">
+            <End Role="SocialNetwork" EntitySet="SocialNetwork" />
+            <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginSocialN__id__53D770D6" Association="Self.FK__LoginSocialN__id__53D770D6">
+            <End Role="User" EntitySet="User" />
+            <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
+          </AssociationSet>
           <AssociationSet Name="FK__PhoneOfHa__hall___6CD828CA" Association="Self.FK__PhoneOfHa__hall___6CD828CA">
             <End Role="Hall" EntitySet="Hall" />
             <End Role="PhoneOfHall" EntitySet="PhoneOfHall" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__city_id__1C873BEC" Association="Self.FK__User__city_id__1C873BEC">
+          <AssociationSet Name="FK__User__city_id__4B422AD5" Association="Self.FK__User__city_id__4B422AD5">
             <End Role="City" EntitySet="City" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__gender__1B9317B3" Association="Self.FK__User__gender__1B9317B3">
+          <AssociationSet Name="FK__User__gender__4A4E069C" Association="Self.FK__User__gender__4A4E069C">
             <End Role="UserGender" EntitySet="UserGender" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__id__1D7B6025" Association="Self.FK__User__id__1D7B6025">
-            <End Role="Login" EntitySet="Login" />
+          <AssociationSet Name="FK__User__role__4C364F0E" Association="Self.FK__User__role__4C364F0E">
+            <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__role__7EF6D905" Association="Self.FK__User__role__7EF6D905">
-            <End Role="LoginRoles" EntitySet="LoginRoles" />
-            <End Role="Login" EntitySet="Login" />
           </AssociationSet>
           <AssociationSet Name="FK__Workout__hall_id__6DCC4D03" Association="Self.FK__Workout__hall_id__6DCC4D03">
             <End Role="Hall" EntitySet="Hall" />
@@ -507,8 +558,6 @@
             <End Role="HallYandexMapLocation" EntitySet="HallYandexMapLocation" />
           </AssociationSet>
           <EntitySet Name="City" EntityType="SportGuideContext.City" />
-          <EntitySet Name="Login" EntityType="SportGuideContext.Login" />
-          <EntitySet Name="LoginRoles" EntityType="SportGuideContext.LoginRoles" />
           <EntitySet Name="Republic" EntityType="SportGuideContext.Republic" />
           <EntitySet Name="User" EntityType="SportGuideContext.User" />
           <EntitySet Name="UserGender" EntityType="SportGuideContext.UserGender" />
@@ -520,14 +569,6 @@
             <End Role="City" EntitySet="City" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__id__05A3D694" Association="SportGuideContext.FK__User__id__05A3D694">
-            <End Role="Login" EntitySet="Login" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__role__7EF6D905" Association="SportGuideContext.FK__User__role__7EF6D905">
-            <End Role="LoginRoles" EntitySet="LoginRoles" />
-            <End Role="Login" EntitySet="Login" />
-          </AssociationSet>
           <AssociationSet Name="FK__User__gender__03BB8E22" Association="SportGuideContext.FK__User__gender__03BB8E22">
             <End Role="UserGender" EntitySet="UserGender" />
             <End Role="User" EntitySet="User" />
@@ -535,6 +576,26 @@
           <AssociationSet Name="FK__Hall__city_id__0697FACD" Association="SportGuideContext.FK__Hall__city_id__0697FACD">
             <End Role="City" EntitySet="City" />
             <End Role="Hall" EntitySet="Hall" />
+          </AssociationSet>
+          <EntitySet Name="LoginSocialNetwork" EntityType="SportGuideContext.LoginSocialNetwork" />
+          <EntitySet Name="SocialNetwork" EntityType="SportGuideContext.SocialNetwork" />
+          <EntitySet Name="UserRoles" EntityType="SportGuideContext.UserRoles" />
+          <AssociationSet Name="FK__LoginSoci__netwo__3DE82FB7" Association="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7">
+            <End Role="SocialNetwork" EntitySet="SocialNetwork" />
+            <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__role__4C364F0E" Association="SportGuideContext.FK__User__role__4C364F0E">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <EntitySet Name="Login" EntityType="SportGuideContext.Login" />
+          <AssociationSet Name="FK__Login__id__52E34C9D" Association="SportGuideContext.FK__Login__id__52E34C9D">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginSocialN__id__53D770D6" Association="SportGuideContext.FK__LoginSocialN__id__53D770D6">
+            <End Role="User" EntitySet="User" />
+            <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="HallYandexMapLocation">
@@ -569,24 +630,6 @@
           <NavigationProperty Name="User" Relationship="SportGuideContext.FK__User__city_id__04AFB25B" FromRole="City" ToRole="User" />
           <NavigationProperty Name="Hall" Relationship="SportGuideContext.FK__Hall__city_id__0697FACD" FromRole="City" ToRole="Hall" />
         </EntityType>
-        <EntityType Name="Login">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="role" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="SportGuideContext.FK__User__id__05A3D694" FromRole="Login" ToRole="User" />
-          <NavigationProperty Name="LoginRoles" Relationship="SportGuideContext.FK__User__role__7EF6D905" FromRole="Login" ToRole="LoginRoles" />
-        </EntityType>
-        <EntityType Name="LoginRoles">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Login" Relationship="SportGuideContext.FK__User__role__7EF6D905" FromRole="LoginRoles" ToRole="Login" />
-        </EntityType>
         <EntityType Name="Republic">
           <Key>
             <PropertyRef Name="id" />
@@ -607,8 +650,13 @@
           <Property Name="city_id" Type="Int32" />
           <Property Name="first_ip" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="City" Relationship="SportGuideContext.FK__User__city_id__04AFB25B" FromRole="User" ToRole="City" />
-          <NavigationProperty Name="Login" Relationship="SportGuideContext.FK__User__id__05A3D694" FromRole="User" ToRole="Login" />
           <NavigationProperty Name="UserGender" Relationship="SportGuideContext.FK__User__gender__03BB8E22" FromRole="User" ToRole="UserGender" />
+          <Property Name="photo_src" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="photo_is_local" Type="Boolean" Nullable="false" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="SportGuideContext.FK__User__role__4C364F0E" FromRole="User" ToRole="UserRoles" />
+          <NavigationProperty Name="Login" Relationship="SportGuideContext.FK__Login__id__52E34C9D" FromRole="User" ToRole="Login" />
+          <NavigationProperty Name="LoginSocialNetwork" Relationship="SportGuideContext.FK__LoginSocialN__id__53D770D6" FromRole="User" ToRole="LoginSocialNetwork" />
         </EntityType>
         <EntityType Name="UserGender">
           <Key>
@@ -641,30 +689,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__id__05A3D694">
-          <End Type="SportGuideContext.Login" Role="Login" Multiplicity="1" />
-          <End Type="SportGuideContext.User" Role="User" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Login">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__User__role__7EF6D905">
-          <End Type="SportGuideContext.LoginRoles" Role="LoginRoles" Multiplicity="1" />
-          <End Type="SportGuideContext.Login" Role="Login" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginRoles">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="Login">
-              <PropertyRef Name="role" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__User__gender__03BB8E22">
           <End Type="SportGuideContext.UserGender" Role="UserGender" Multiplicity="0..1" />
           <End Type="SportGuideContext.User" Role="User" Multiplicity="*" />
@@ -686,6 +710,88 @@
             </Principal>
             <Dependent Role="Hall">
               <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LoginSocialNetwork">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="network_name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="uid_sn" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SocialNetwork" Relationship="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7" FromRole="LoginSocialNetwork" ToRole="SocialNetwork" />
+          <NavigationProperty Name="User" Relationship="SportGuideContext.FK__LoginSocialN__id__53D770D6" FromRole="LoginSocialNetwork" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SocialNetwork">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LoginSocialNetwork" Relationship="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7" FromRole="SocialNetwork" ToRole="LoginSocialNetwork" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="SportGuideContext.FK__User__role__4C364F0E" FromRole="UserRoles" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__LoginSoci__netwo__3DE82FB7">
+          <End Type="SportGuideContext.SocialNetwork" Role="SocialNetwork" Multiplicity="1" />
+          <End Type="SportGuideContext.LoginSocialNetwork" Role="LoginSocialNetwork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialNetwork">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="LoginSocialNetwork">
+              <PropertyRef Name="network_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__role__4C364F0E">
+          <End Type="SportGuideContext.UserRoles" Role="UserRoles" Multiplicity="1" />
+          <End Type="SportGuideContext.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="SportGuideContext.FK__Login__id__52E34C9D" FromRole="Login" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Login__id__52E34C9D">
+          <End Type="SportGuideContext.User" Role="User" Multiplicity="1" />
+          <End Type="SportGuideContext.Login" Role="Login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginSocialN__id__53D770D6">
+          <End Type="SportGuideContext.User" Role="User" Multiplicity="1" />
+          <End Type="SportGuideContext.LoginSocialNetwork" Role="LoginSocialNetwork" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LoginSocialNetwork">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -784,23 +890,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Login">
-            <EntityTypeMapping TypeName="SportGuideContext.Login">
-              <MappingFragment StoreEntitySet="Login">
-                <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LoginRoles">
-            <EntityTypeMapping TypeName="SportGuideContext.LoginRoles">
-              <MappingFragment StoreEntitySet="LoginRoles">
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Republic">
             <EntityTypeMapping TypeName="SportGuideContext.Republic">
               <MappingFragment StoreEntitySet="Republic">
@@ -813,6 +902,9 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="SportGuideContext.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="photo_is_local" ColumnName="photo_is_local" />
+                <ScalarProperty Name="photo_src" ColumnName="photo_src" />
                 <ScalarProperty Name="first_ip" ColumnName="first_ip" />
                 <ScalarProperty Name="city_id" ColumnName="city_id" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
@@ -826,6 +918,39 @@
             <EntityTypeMapping TypeName="SportGuideContext.UserGender">
               <MappingFragment StoreEntitySet="UserGender">
                 <ScalarProperty Name="gender" ColumnName="gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginSocialNetwork">
+            <EntityTypeMapping TypeName="SportGuideContext.LoginSocialNetwork">
+              <MappingFragment StoreEntitySet="LoginSocialNetwork">
+                <ScalarProperty Name="uid_sn" ColumnName="uid_sn" />
+                <ScalarProperty Name="network_name" ColumnName="network_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocialNetwork">
+            <EntityTypeMapping TypeName="SportGuideContext.SocialNetwork">
+              <MappingFragment StoreEntitySet="SocialNetwork">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="SportGuideContext.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="SportGuideContext.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,9 +20,14 @@ namespace Dal
         public string gender { get; set; }
         public Nullable<int> city_id { get; set; }
         public string first_ip { get; set; }
+        public string photo_src { get; set; }
+        public bool photo_is_local { get; set; }
+        public string role { get; set; }
     
         public virtual City City { get; set; }
-        public virtual Login Login { get; set; }
         public virtual UserGender UserGender { get; set; }
+        public virtual UserRoles UserRoles { get; set; }
+        public virtual Login Login { get; set; }
+        public virtual LoginSocialNetwork LoginSocialNetwork { get; set; }
     }
 }

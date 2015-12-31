@@ -125,6 +125,7 @@
     <Content Include="Content\site.css" />
     <Content Include="Content\site_adaptive.css" />
     <Content Include="Content\User\site.css" />
+    <Content Include="Core\Util\Private\check this file in github.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -173,7 +174,10 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\HelperExtentions.cs" />
-    <Compile Include="Core\Private\PasswordCryptoProvider.cs" />
+    <Compile Include="Core\Util\Hasher.cs" />
+    <Compile Include="Core\Util\Private\PasswordCryptoProvider.cs" />
+    <Compile Include="Core\Util\Private\VK.cs" />
+    <Compile Include="Core\Util\ValueOfCookieException.cs" />
     <Compile Include="Core\ViewModels\SearchViewModel.cs" />
     <Compile Include="Core\ViewModels\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">

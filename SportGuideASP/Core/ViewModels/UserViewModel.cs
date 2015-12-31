@@ -2,6 +2,7 @@
 using SportGuideASP.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace SportGuideASP.Core.ViewModels
 {
@@ -26,6 +27,16 @@ namespace SportGuideASP.Core.ViewModels
             public string Name { get; set; }
         }
 
+        public class RegisterVK
+        {
+            public int uid { get; set; }
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+            public string gender { get; set; }
+            public string photo_scr { get; set; }
+            public DateTime? bdate { get; set; }
+            //public string href { get; set; }
+        }
 
         private class ValidationLogin
         {

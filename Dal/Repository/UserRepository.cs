@@ -6,6 +6,7 @@ namespace Dal.Repository
     internal class UserRepository : IRepository<User, int>
     {
         private SportGuideEntities _ctx;
+        private const string _defaultRole = "User";
 
         public UserRepository(SportGuideEntities _ctx)
         {
@@ -24,6 +25,7 @@ namespace Dal.Repository
 
         public User Save(User entity)
         {
+            if (entity.role == null) entity.role = _defaultRole;
             var added = _ctx.User.Add(entity);
             _ctx.SaveChanges();
             return added;
@@ -36,6 +38,7 @@ namespace Dal.Repository
             updating.birthday = entity.birthday;
             updating.city_id = entity.city_id;
             updating.gender = entity.gender;
+            updating.role = entity.role;
             updating.first_ip = entity.first_ip;
 
             _ctx.SaveChanges();
