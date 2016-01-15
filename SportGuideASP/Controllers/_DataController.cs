@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace SportGuideASP.Controllers
 {
-    public class APIController : Controller
+    public class _DataController : Controller
     {
         DataManager _dm = new DataManager();
 

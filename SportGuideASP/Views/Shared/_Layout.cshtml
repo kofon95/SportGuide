@@ -9,13 +9,12 @@
     <link href="~/Content/site_adaptive.css" rel="stylesheet" type="text/css" />
 	@RenderSection("Styles", false)
     <script src="~/Scripts/url.manager.js"></script>
-    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/jquery-2.2.0.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     @*@MvcHtmlString.Create(ViewBag.Head + "")*@
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="~/Scripts/common.js"></script>
-    <script src="~/Scripts/init.js"></script>
     <script src="~/Scripts/filter_ajax.js"></script>
 	@RenderSection("Scripts", false)
 </head>
@@ -51,26 +50,23 @@
                         <script>
                             // init select elem of category by "get parameter"
                             !function () {
-                                var value = @{ 
-                                    string catId = Request.Params["categoryId"] ?? "";
-                                    @(catId.Length == 0 ? MvcHtmlString.Create("''") : MvcHtmlString.Create(catId))
-                                };
                                 var categs = document.getElementById("sport-category");
-                                categs.value = value;
-
-                                var kindOfSportContainer = document.getElementById("kind-of-sport-container");
+                                categs.value = @{
+									string catId = Request.Params["categoryId"] ?? "''";
+									@MvcHtmlString.Create(catId)
+                                };
 
                                 // on change of select elem
-                                $(document).ready(function() {
-                                    //$(categs).change(); // may
-                                    var ev = document.createEvent("HTMLEvents");
-                                    ev.initEvent("change", false, true);
-                                    categs.dispatchEvent(ev);
-                                })
+	                            $(document).ready(function() {
+		                            //$(categs).change(); // may
+		                            var ev = document.createEvent("HTMLEvents");
+		                            ev.initEvent("change", false, true);
+		                            categs.dispatchEvent(ev);
+	                            });
                             }()
                         </script>
                     </div>
-                                        }
+									}
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

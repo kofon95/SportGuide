@@ -27,6 +27,6 @@ $(document).ready(function () {
     })
 
     function getCategoryUrl(param) {
-        return location.origin + "/API/GetKindsOfSportByCategoryId/" + encodeURIComponent(param);
+        return location.origin + "/_Data/GetKindsOfSportByCategoryId/" + encodeURIComponent(param);
     }
 });
