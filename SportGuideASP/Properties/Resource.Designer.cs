@@ -61,11 +61,38 @@ namespace SportGuideASP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Не выбрано.
+        /// </summary>
+        internal static string ChooseSomething {
+            get {
+                return ResourceManager.GetString("ChooseSomething", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Изображение {0} не поддерживается.
+        /// </summary>
+        internal static string ImageNotValid {
+            get {
+                return ResourceManager.GetString("ImageNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите не менее {2} символов.
+        /// </summary>
+        internal static string MinimumSymbols {
+            get {
+                return ResourceManager.GetString("MinimumSymbols", resourceCulture);
             }
         }
         
@@ -79,11 +106,20 @@ namespace SportGuideASP.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Это поле не может быть пустым.
+        ///   Looks up a localized string similar to Поле не может быть пустым.
         /// </summary>
         internal static string RequiredField {
             get {
                 return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите число.
+        /// </summary>
+        internal static string RequiredNumber {
+            get {
+                return ResourceManager.GetString("RequiredNumber", resourceCulture);
             }
         }
         

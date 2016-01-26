@@ -5,11 +5,11 @@ namespace Dal.Repository
 {
     internal class LoginRepository : IRepository<Login, int>
     {
-        private SportGuideEntities _ctx;
+        private readonly SportGuideEntities _ctx;
 
-        public LoginRepository(SportGuideEntities _ctx)
+        public LoginRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<Login> GetAll()

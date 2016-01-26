@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="SportGuideContext.Category" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Hall" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.KindOfSport" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="10.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="11.375" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Trainer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Workout" Width="1.5" PointX="5.75" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="SportGuideContext.FK__KindOfSpo__categ__34C8D9D1" ManuallyRouted="false" />
@@ -28,12 +28,13 @@
         <AssociationConnector Association="SportGuideContext.FK__Hall__city_id__0697FACD" />
         <EntityTypeShape EntityType="SportGuideContext.LoginSocialNetwork" Width="1.5" PointX="8.625" PointY="11.25" />
         <EntityTypeShape EntityType="SportGuideContext.SocialNetwork" Width="1.5" PointX="6.375" PointY="11.375" />
-        <EntityTypeShape EntityType="SportGuideContext.UserRoles" Width="1.5" PointX="2.625" PointY="8.625" />
         <AssociationConnector Association="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7" />
-        <AssociationConnector Association="SportGuideContext.FK__User__role__4C364F0E" />
         <EntityTypeShape EntityType="SportGuideContext.Login" Width="1.5" PointX="2.125" PointY="11.25" />
         <AssociationConnector Association="SportGuideContext.FK__Login__id__52E34C9D" />
         <AssociationConnector Association="SportGuideContext.FK__LoginSocialN__id__53D770D6" />
+        <EntityTypeShape EntityType="SportGuideContext.HallImages" Width="1.5" PointX="11.375" PointY="2.5" />
+        <AssociationConnector Association="SportGuideContext.FK__HallImage__hall___67DE6983" />
+        <EntityTypeShape EntityType="SportGuideContext.UserRoles" Width="1.5" PointX="2.625" PointY="8.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

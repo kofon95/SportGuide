@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace SportGuideASP.Core.Util
 {
@@ -8,9 +9,7 @@ namespace SportGuideASP.Core.Util
         public ValueOfCookieException() { }
         public ValueOfCookieException(string message) : base(message) { }
         public ValueOfCookieException(string message, Exception inner) : base(message, inner) { }
-        protected ValueOfCookieException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context)
-        { }
+        protected ValueOfCookieException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
     }
 }

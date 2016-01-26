@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChooseSomething" xml:space="preserve">
+    <value>Не выбрано</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="ImageNotValid" xml:space="preserve">
+    <value>Изображение {0} не поддерживается</value>
+  </data>
+  <data name="MinimumSymbols" xml:space="preserve">
+    <value>Введите не менее {2} символов</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
-    <value>Это поле не может быть пустым</value>
+    <value>Поле не может быть пустым</value>
+  </data>
+  <data name="RequiredNumber" xml:space="preserve">
+    <value>Введите число</value>
   </data>
   <data name="UserExists" xml:space="preserve">
     <value>Пользователь с таким Email уже существует</value>

@@ -4,11 +4,11 @@ namespace Dal.Repository
 {
     internal class HallRepository : IRepository<Hall, int>
     {
-        SportGuideEntities _ctx;
+        readonly SportGuideEntities _ctx;
 
-        public HallRepository(SportGuideEntities _ctx)
+        public HallRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<Hall> GetAll()

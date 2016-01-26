@@ -18,11 +18,18 @@
 </div>
 
 <div class="time-of-workout">
-	<span>Тренировки проводятся в</span>
-	<span>@(new DateTime(Model.TimeForWorkout.Value.Ticks).ToShortTimeString())</span>
-</div>
+	@{
+		string time = Model.TimeForWorkout?.ToString(@"hh\:mm");
+		if (time != null)
+		{
+			<span>Тренировки проводятся в</span>
+			<span>@time</span>
+		}
+	}
+	</div>
+	
 
-<div class="day-of-week-container">
+	<div class="day-of-week-container">
 	<div class="day-of-week-title">Дни недели</div>
 	@{
 		string yes = "class=\"yes\"";
@@ -42,6 +49,13 @@
 		</tbody>
 	</table>
 </div>@*END DAYS*@
+
+<div>
+	@foreach (var src in Model.HallImages)
+	{
+		<img style="width: 300px" src="@src" />
+	}
+</div>
 
 <div class="address">
 	<div class="address-text">

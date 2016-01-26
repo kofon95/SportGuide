@@ -19,6 +19,7 @@ namespace Dal
         {
             this.PhoneOfHall = new HashSet<PhoneOfHall>();
             this.Workout = new HashSet<Workout>();
+            this.HallImages = new HashSet<HallImages>();
         }
     
         public int id { get; set; }
@@ -33,5 +34,7 @@ namespace Dal
         public virtual ICollection<Workout> Workout { get; set; }
         public virtual HallYandexMapLocation HallYandexMapLocation { get; set; }
         public virtual City City { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HallImages> HallImages { get; set; }
     }
 }

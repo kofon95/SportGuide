@@ -1,0 +1,130 @@
+﻿@model SportGuideASP.Core.ViewModels.AdminViewModel.Workout
+
+@{
+	ViewBag.Title = "Изменение занятия";
+}
+
+<h2>Занятие</h2>
+@using (Html.BeginForm("UpdateWorkout", "Admin"))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "", new { @class="text-danger" })
+	@Html.HiddenFor(t => t.Id)
+	@*<select id="KindOfSportId" name="KindOfSportId" data-bind="options: kindsOfSports,
+		 optionsCaption:'Выберите категорию',
+		 optionsValue: 'id',
+		 optionsText: 'sport_name'"></select>*@
+	<div>
+		@Html.DropDownListFor(t => t.KindOfSportId, new SelectList(new object[0]), new
+		{
+			@data_bind = "options: kindsOfSports, optionsCaption:'Выберите категорию', optionsValue: 'id', optionsText: 'sport_name'",
+			value = Model.KindOfSportId,
+		})
+		@Html.ValidationMessageFor(t => t.KindOfSportId, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.DropDownListFor(t => t.HallId, new SelectList(new object[0]), new
+		{
+			@data_bind = "options: halls, optionsCaption:'Выберите заведение', optionsValue: 'id', optionsText: 'hall_name'",
+			value = Model.HallId,
+		})
+		@Html.ValidationMessageFor(t => t.HallId, "", new { @class = "text-danger" })
+	</div>
+	@*<select id="HallId" name="HallId" data-bind="options: halls, optionsCaption:'Выберите заведение',
+		 optionsValue: 'id',
+		 optionsText: 'hall_name'"></select>*@
+		<br />
+	<div>
+		@Html.DropDownListFor(t => t.TrainerId, new SelectList(new object[0]), new
+		{
+			@data_bind = "options: trainers, optionsCaption:'Выберите тренера', optionsValue: 'id', optionsText: 'name'",
+			value = Model.TrainerId,
+		})
+		@Html.ValidationMessageFor(t => t.TrainerId, "", new { @class = "text-danger" })
+	</div>
+
+		@*<select id="TrainerId" name="TrainerId" data-bind="options: trainers,
+		 optionsCaption:'Выберите тренера',
+		 optionsValue: 'id',
+		 optionsText: 'name'"></select>*@
+
+		<hr />
+		<div>
+			Информация @Html.TextBoxFor(t => t.Info)
+			@Html.ValidationMessageFor(t => t.Info, "", new { @class="text-danger" })
+		</div>
+		<div>
+			Месячная оплата (руб.) @Html.TextBoxFor(t => t.PaymentForMonth)
+			@Html.ValidationMessageFor(t => t.PaymentForMonth, "", new { @class = "text-danger" })
+		</div>
+		<br />
+		<div>
+			<span>Возраст спортсменов</span>
+			<div>
+				мин. @Html.TextBoxFor(t => t.MinAge)
+				@Html.ValidationMessageFor(t => t.MinAge, "", new { @class = "text-danger" })
+			</div>
+			<div>
+				макс. @Html.TextBoxFor(t => t.MaxAge)
+				@Html.ValidationMessageFor(t => t.MaxAge, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<br />
+		<div>
+			Время @Html.TextBoxFor(t => t.Time, new { type = "time" })
+			@Html.ValidationMessageFor(t => t.Time, "", new { @class = "text-danger" })
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<td>пн.</td>
+						<td>вт.</td>
+						<td>ср.</td>
+						<td>чт.</td>
+						<td>пт.</td>
+						<td>сб.</td>
+						<td>вс.</td>
+					</tr>
+				</thead>
+				<tr>
+					<td>@Html.CheckBoxFor(t => t.Mon)</td>
+					<td>@Html.CheckBoxFor(t => t.Tue)</td>
+					<td>@Html.CheckBoxFor(t => t.Wed)</td>
+					<td>@Html.CheckBoxFor(t => t.Thu)</td>
+					<td>@Html.CheckBoxFor(t => t.Fri)</td>
+					<td>@Html.CheckBoxFor(t => t.Sat)</td>
+					<td>@Html.CheckBoxFor(t => t.Sun)</td>
+				</tr>
+			</table>
+		</div>
+		<input type="submit" value="Сохранить изменения" />
+}
+<div>@Html.ActionLink("Назад", "Index")</div>
+
+
+@section Scripts{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/knockout-3.4.0.js"></script>
+}
+<script>
+	(function () {
+		$.get(getApiUrl("get/KindsOfSports"), function (response) {
+			var kindOfSportId = document.getElementById("KindOfSportId");
+			ko.applyBindings({ kindsOfSports: ko.observableArray(response) }, kindOfSportId);
+			kindOfSportId.value = kindOfSportId.getAttribute("value")
+		});
+		$.get(getApiUrl("get/Halls"), function (response) {
+			var hallId = document.getElementById("HallId");
+			ko.applyBindings({ halls: ko.observableArray(response) }, document.getElementById("HallId"));
+			hallId.value = hallId.getAttribute("value")
+		});
+		$.get(getApiUrl("get/Trainers"), function (response) {
+			var trainerId = document.getElementById("TrainerId");
+			ko.applyBindings({ trainers: ko.observableArray(response) }, document.getElementById("TrainerId"));
+			trainerId.value = trainerId.getAttribute("value")
+		});
+	})();
+</script>

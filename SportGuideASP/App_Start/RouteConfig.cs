@@ -34,12 +34,12 @@ namespace SportGuideASP
             );
 
             routes.MapRoute(
-                name: "Common",
-                url: "{action}",
+                name: "Common_about",
+                url: "About",
                 defaults: new
                 {
                     controller = "Common",
-                    action = "Index",
+                    action = "About",
                 }
             );
 

@@ -6,9 +6,9 @@ namespace Dal.Repository
     {
         private SportGuideEntities _ctx;
 
-        public CityRepository(SportGuideEntities _ctx)
+        public CityRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<City> GetAll()

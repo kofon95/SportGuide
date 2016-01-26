@@ -14,6 +14,9 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     @*@MvcHtmlString.Create(ViewBag.Head + "")*@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+	<script>
+		function getApiUrl(path){ return location.origin + "/api/" + (path||""); };
+	</script>
     <script src="~/Scripts/common.js"></script>
     <script src="~/Scripts/filter_ajax.js"></script>
 	@RenderSection("Scripts", false)
@@ -29,7 +32,7 @@
                 </button>
                 @Html.ActionLink("Sport Guide", "Index", "Common", new { area = "" }, new { @class = "navbar-brand" })
                 @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline" }))
-                {
+				{
                     <div class="form-group no-active">
                         <div>
                             <input id="search" class="form-control search" type="text" name="s" value="@Request.Params["s"]" placeholder="Поиск" />
@@ -40,9 +43,9 @@
                                 <select id="sport-category" name="categoryId" class="select-sport-category">
                                     <option value="">Любая категория</option>
                                     @foreach (var cat in StaticData.Categories)
-                                    {
+									{
                                         <option value="@cat.id">@cat.category_name</option>
-                                    }
+									}
                                 </select>
                             </span>
                             <span id="kind-of-sport-container" class="wrapper-select"></span>
@@ -66,17 +69,23 @@
                             }()
                         </script>
                     </div>
-									}
+				}
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-					<li>@(User.Identity.IsAuthenticated ?
-										Html.ActionLink("Выход", "SignOut", "User") :
-										Html.ActionLink("Вход", "SignIn", "User"))</li>
-                    <li>@Html.ActionLink("Регистрация", "Register", "User")</li>
-                    <li>@Html.ActionLink("О проекте", "About", "Common")</li>
-                </ul>
-            </div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li>@Html.ActionLink("Выход", "SignOut", "User")</li>
+						<li>@Html.ActionLink("Админ", "Index", "Admin")</li>
+					}
+					else {
+						<li>@Html.ActionLink("Вход", "SignIn", "User")</li>
+					}
+					<li>@Html.ActionLink("Регистрация", "Register", "User")</li>
+					<li>@Html.ActionLink("О проекте", "About", "Common")</li>
+				</ul>
+			</div>
+
         </div>
     </div>
 

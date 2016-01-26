@@ -26,7 +26,6 @@ namespace Dal
     
         public virtual City City { get; set; }
         public virtual UserGender UserGender { get; set; }
-        public virtual UserRoles UserRoles { get; set; }
         public virtual Login Login { get; set; }
         public virtual LoginSocialNetwork LoginSocialNetwork { get; set; }
     }

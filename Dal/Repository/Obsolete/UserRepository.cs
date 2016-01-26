@@ -5,12 +5,12 @@ namespace Dal.Repository
 {
     internal class UserRepository : IRepository<User, int>
     {
-        private SportGuideEntities _ctx;
+        private readonly SportGuideEntities _ctx;
         private const string _defaultRole = "User";
 
-        public UserRepository(SportGuideEntities _ctx)
+        public UserRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<User> GetAll()

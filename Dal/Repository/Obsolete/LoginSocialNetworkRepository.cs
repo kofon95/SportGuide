@@ -4,11 +4,11 @@ namespace Dal.Repository
 {
     internal class LoginSocialNetworkRepository : IRepository<LoginSocialNetwork, int>
     {
-        SportGuideEntities _ctx;
+        readonly SportGuideEntities _ctx;
 
-        public LoginSocialNetworkRepository(SportGuideEntities _ctx)
+        public LoginSocialNetworkRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<LoginSocialNetwork> GetAll()

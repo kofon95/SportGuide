@@ -38,7 +38,8 @@ namespace Dal
         public virtual DbSet<UserGender> UserGender { get; set; }
         public virtual DbSet<LoginSocialNetwork> LoginSocialNetwork { get; set; }
         public virtual DbSet<SocialNetwork> SocialNetwork { get; set; }
-        public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<HallImages> HallImages { get; set; }
+        public virtual DbSet<UserRoles> UserRoles { get; set; }
     }
 }

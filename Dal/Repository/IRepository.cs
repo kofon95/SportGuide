@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Dal.Repository
 {
@@ -17,6 +18,7 @@ namespace Dal.Repository
 
         #region INSERT
         TEntity Save(TEntity entity);
+        TEntity[] Save(IEnumerable<TEntity> entity);
         #endregion
 
         #region Delete

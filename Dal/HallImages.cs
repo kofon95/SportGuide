@@ -12,8 +12,12 @@ namespace Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class UserRoles
+    public partial class HallImages
     {
-        public string name { get; set; }
+        public int id { get; set; }
+        public int hall_id { get; set; }
+        public string src { get; set; }
+    
+        public virtual Hall Hall { get; set; }
     }
 }

@@ -1,10 +1,15 @@
-﻿using Dal;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using Dal;
 using SportGuideASP.Core.ViewModels;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using SportGuideASP.Core;
 using static SportGuideASP.StaticData;
+using static SportGuideASP.Core.Consts;
 
 namespace SportGuideASP.Controllers
 {
@@ -61,37 +66,42 @@ namespace SportGuideASP.Controllers
                 return RedirectToAction("Index");
             }
 
-            var model = (from w in _dm.Workout.GetAll()
-                        join k in _dm.KindOfSport.GetAll() on w.kind_of_sport_id equals k.id
-                        join c in _dm.Category.GetAll() on k.category_id equals c.id
-                        join t in _dm.Trainer.GetAll() on w.trainer_id equals t.id
-                        join h in _dm.Hall.GetAll() on w.hall_id equals h.id
-                        join m in _dm.HallYandexMapLocation.GetAll() on h.id equals m.id
-                        select new SearchViewModel.Workout
-                        {
-                            Id = w.id,
-                            TimeForWorkout = w.time,
+            IEnumerable<SearchViewModel.Workout> workouts =
+                    from w in _dm.Workout.GetAll().Where(t => t.id == id)
+                    join k in _dm.KindOfSport.GetAll() on w.kind_of_sport_id equals k.id
+                    join c in _dm.Category.GetAll() on k.category_id equals c.id
+                    join t in _dm.Trainer.GetAll() on w.trainer_id equals t.id
+                    join h in DalExtensions.Include(_dm.Hall.GetAll(), nameof(_dm.HallImages)) on w.hall_id equals h.id
+                    join m in _dm.HallYandexMapLocation.GetAll() on h.id equals m.id
+                    //join i in _dm.HallImages.GetAll() on h.id equals i.hall_id
+                    select new SearchViewModel.Workout
+                    {
+                        Id = w.id,
+                        TimeForWorkout = w.time,
 
-                            DateMonday = w.mon,
-                            DateTuesday = w.tue,
-                            DateWednesday = w.wed,
-                            DateThursday = w.thu,
-                            DateFriday = w.fri,
-                            DateSaturday = w.sat,
-                            DateSunday = w.sun,
+                        DateMonday = w.mon,
+                        DateTuesday = w.tue,
+                        DateWednesday = w.wed,
+                        DateThursday = w.thu,
+                        DateFriday = w.fri,
+                        DateSaturday = w.sat,
+                        DateSunday = w.sun,
 
-                            KindOfSport = k.sport_name,
-                            CategoryName = c.category_name,
+                        KindOfSport = k.sport_name,
+                        CategoryName = c.category_name,
 
-                            TrainerName = t.name,
-                            TrainerImageSource = t.photo_src,
-                            TrainersPhoneNumber = t.phone_number,
+                        TrainerName = t.name,
+                        TrainerImageSource = Paths.TrainerImageSource + t.photo_src,
+                        TrainersPhoneNumber = t.phone_number,
 
-                            HallName = h.hall_name,
-                            Address = h.address,
-                            Longitude = m.longitude,
-                            Latitude = m.latitude,
-                        }).FirstOrDefault(t => t.Id == id);
+                        HallName = h.hall_name,
+                        HallImages = h.HallImages.Select(t => Paths.HallImageSource + t.src),
+                        Address = h.address,
+                        Longitude = m.longitude,
+                        Latitude = m.latitude,
+                    };
+
+            SearchViewModel.Workout model = workouts.FirstOrDefault();
 
             if (model == null)
             {

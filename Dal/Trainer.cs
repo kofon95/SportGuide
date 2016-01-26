@@ -25,6 +25,7 @@ namespace Dal
         public System.DateTime birthday { get; set; }
         public string photo_src { get; set; }
         public string phone_number { get; set; }
+        public System.DateTime register_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Workout> Workout { get; set; }

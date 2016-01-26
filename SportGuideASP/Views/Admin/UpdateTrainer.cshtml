@@ -1,0 +1,38 @@
+﻿@model SportGuideASP.Core.ViewModels.AdminViewModel.Trainer
+
+@{
+	ViewBag.Title = "Правка данных тренера";
+}
+
+<h2>AddTrainer</h2>
+
+@using (Html.BeginForm(null, "Admin", FormMethod.Post, new { enctype="multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "", new { @class="text-danger" })
+	@Html.HiddenFor(t => t.Id, new { value = Model.Id })
+	<div>
+		@Html.TextBoxFor(t => t.Name)
+		@Html.ValidationMessageFor(t => t.Name, "", new { @class = "text-danger" })
+	</div>
+	<div>
+		@Html.TextBoxFor(t => t.Birthday, "", new { type="date" })
+		@Html.ValidationMessageFor(t => t.Birthday, "", new { @class = "text-danger" })
+		<script>
+			document.getElementById("Birthday").value = "@Model.Birthday.ToString("yyyy-MM-dd")"
+		</script>
+	</div>
+	<div>
+		@Html.TextBoxFor(t => t.PhoneNumber)
+	</div>
+	<div>
+		<input type="file" name="PhotoSrc" value="Photo" accept="image/*" />
+	</div>
+	<input type="submit" value="Сохранить изменения" />
+}
+
+
+@section Scripts{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

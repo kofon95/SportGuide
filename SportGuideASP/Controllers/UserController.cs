@@ -23,7 +23,7 @@ namespace SportGuideASP.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Register));
         }
         [HttpGet]
         public ActionResult SignIn()
@@ -66,7 +66,7 @@ namespace SportGuideASP.Controllers
                 return View();
             }
 
-            AuthenticateUser(foundLogin.Login.id, foundLogin.Role);
+            AuthenticateUser(foundLogin.Login.id, foundLogin.Role.Replace(" ", ""));
             return Redirect(ReturnUrl);
         }
 

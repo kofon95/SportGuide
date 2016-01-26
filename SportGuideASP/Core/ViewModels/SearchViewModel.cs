@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SportGuideASP.Core.ViewModels
 {
@@ -32,6 +33,8 @@ namespace SportGuideASP.Core.ViewModels
             public string TrainersPhoneNumber { get; set; }
             
             public string HallName { get; set; }
+            //public string HallImage { get; set; }
+            public IEnumerable<string> HallImages { get; set; }
 
             public string Address { get; set; }
             public double Longitude { get; set; }

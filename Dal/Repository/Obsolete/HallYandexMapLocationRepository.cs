@@ -4,11 +4,11 @@ namespace Dal.Repository
 {
     internal class HallYandexMapLocationRepository : IRepository<HallYandexMapLocation, int>
     {
-        SportGuideEntities _ctx;
+        readonly SportGuideEntities _ctx;
 
-        public HallYandexMapLocationRepository(SportGuideEntities _ctx)
+        public HallYandexMapLocationRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<HallYandexMapLocation> GetAll()

@@ -30,6 +30,14 @@
           <Property Name="city_id" Type="int" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="1024" />
         </EntityType>
+        <EntityType Name="HallImages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hall_id" Type="int" Nullable="false" />
+          <Property Name="src" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="HallYandexMapLocation">
           <Key>
             <PropertyRef Name="id" />
@@ -95,6 +103,7 @@
           <Property Name="birthday" Type="date" Nullable="false" />
           <Property Name="photo_src" Type="nvarchar" MaxLength="256" />
           <Property Name="phone_number" Type="nvarchar" MaxLength="24" />
+          <Property Name="register_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -107,7 +116,7 @@
           <Property Name="photo_src" Type="nvarchar" MaxLength="1000" />
           <Property Name="photo_is_local" Type="bit" Nullable="false" />
           <Property Name="city_id" Type="int" />
-          <Property Name="role" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="first_ip" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserGender">
@@ -167,6 +176,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__HallImage__hall___67DE6983">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="HallImages" Type="Self.HallImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HallImages">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__HallYandexMa__id__6BE40491">
           <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
           <End Role="HallYandexMapLocation" Type="Self.HallYandexMapLocation" Multiplicity="0..1" />
@@ -179,7 +200,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__KindOfSpo__categ__34C8D9D1">
+        <Association Name="FK__KindOfSpo__categ__10E07F16">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -263,18 +284,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__role__4C364F0E">
-          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRoles">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="role" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Workout__hall_id__6DCC4D03">
           <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
@@ -315,6 +324,7 @@
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hall" EntityType="Self.Hall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HallImages" EntityType="Self.HallImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HallYandexMapLocation" EntityType="Self.HallYandexMapLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KindOfSport" EntityType="Self.KindOfSport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
@@ -335,11 +345,15 @@
             <End Role="City" EntitySet="City" />
             <End Role="Hall" EntitySet="Hall" />
           </AssociationSet>
+          <AssociationSet Name="FK__HallImage__hall___67DE6983" Association="Self.FK__HallImage__hall___67DE6983">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="HallImages" EntitySet="HallImages" />
+          </AssociationSet>
           <AssociationSet Name="FK__HallYandexMa__id__6BE40491" Association="Self.FK__HallYandexMa__id__6BE40491">
             <End Role="Hall" EntitySet="Hall" />
             <End Role="HallYandexMapLocation" EntitySet="HallYandexMapLocation" />
           </AssociationSet>
-          <AssociationSet Name="FK__KindOfSpo__categ__34C8D9D1" Association="Self.FK__KindOfSpo__categ__34C8D9D1">
+          <AssociationSet Name="FK__KindOfSpo__categ__10E07F16" Association="Self.FK__KindOfSpo__categ__10E07F16">
             <End Role="Category" EntitySet="Category" />
             <End Role="KindOfSport" EntitySet="KindOfSport" />
           </AssociationSet>
@@ -365,10 +379,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__User__gender__4A4E069C" Association="Self.FK__User__gender__4A4E069C">
             <End Role="UserGender" EntitySet="UserGender" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__role__4C364F0E" Association="Self.FK__User__role__4C364F0E">
-            <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK__Workout__hall_id__6DCC4D03" Association="Self.FK__Workout__hall_id__6DCC4D03">
@@ -409,6 +419,7 @@
           <NavigationProperty Name="HallYandexMapLocation" Relationship="SportGuideContext.FK__HallYandexMa__id__3C34F16F" FromRole="Hall" ToRole="HallYandexMapLocation" />
           <Property Name="city_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="City" Relationship="SportGuideContext.FK__Hall__city_id__0697FACD" FromRole="Hall" ToRole="City" />
+          <NavigationProperty Name="HallImages" Relationship="SportGuideContext.FK__HallImage__hall___67DE6983" FromRole="Hall" ToRole="HallImages" />
         </EntityType>
         <EntityType Name="KindOfSport">
           <Key>
@@ -440,6 +451,7 @@
           <Property Name="photo_src" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="phone_number" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Workout" Relationship="Self.FK__Workout__trainer__03F0984C" FromRole="Trainer" ToRole="Workout" />
+          <Property Name="register_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Workout">
           <Key>
@@ -579,14 +591,9 @@
           </AssociationSet>
           <EntitySet Name="LoginSocialNetwork" EntityType="SportGuideContext.LoginSocialNetwork" />
           <EntitySet Name="SocialNetwork" EntityType="SportGuideContext.SocialNetwork" />
-          <EntitySet Name="UserRoles" EntityType="SportGuideContext.UserRoles" />
           <AssociationSet Name="FK__LoginSoci__netwo__3DE82FB7" Association="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7">
             <End Role="SocialNetwork" EntitySet="SocialNetwork" />
             <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__role__4C364F0E" Association="SportGuideContext.FK__User__role__4C364F0E">
-            <End Role="UserRoles" EntitySet="UserRoles" />
-            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <EntitySet Name="Login" EntityType="SportGuideContext.Login" />
           <AssociationSet Name="FK__Login__id__52E34C9D" Association="SportGuideContext.FK__Login__id__52E34C9D">
@@ -597,6 +604,12 @@
             <End Role="User" EntitySet="User" />
             <End Role="LoginSocialNetwork" EntitySet="LoginSocialNetwork" />
           </AssociationSet>
+          <EntitySet Name="HallImages" EntityType="SportGuideContext.HallImages" />
+          <AssociationSet Name="FK__HallImage__hall___67DE6983" Association="SportGuideContext.FK__HallImage__hall___67DE6983">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="HallImages" EntitySet="HallImages" />
+          </AssociationSet>
+          <EntitySet Name="UserRoles" EntityType="SportGuideContext.UserRoles" />
         </EntityContainer>
         <EntityType Name="HallYandexMapLocation">
           <Key>
@@ -653,8 +666,7 @@
           <NavigationProperty Name="UserGender" Relationship="SportGuideContext.FK__User__gender__03BB8E22" FromRole="User" ToRole="UserGender" />
           <Property Name="photo_src" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="photo_is_local" Type="Boolean" Nullable="false" />
-          <Property Name="role" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserRoles" Relationship="SportGuideContext.FK__User__role__4C364F0E" FromRole="User" ToRole="UserRoles" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Login" Relationship="SportGuideContext.FK__Login__id__52E34C9D" FromRole="User" ToRole="Login" />
           <NavigationProperty Name="LoginSocialNetwork" Relationship="SportGuideContext.FK__LoginSocialN__id__53D770D6" FromRole="User" ToRole="LoginSocialNetwork" />
         </EntityType>
@@ -731,13 +743,6 @@
           <Property Name="description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LoginSocialNetwork" Relationship="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7" FromRole="SocialNetwork" ToRole="LoginSocialNetwork" />
         </EntityType>
-        <EntityType Name="UserRoles">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="SportGuideContext.FK__User__role__4C364F0E" FromRole="UserRoles" ToRole="User" />
-        </EntityType>
         <Association Name="FK__LoginSoci__netwo__3DE82FB7">
           <End Type="SportGuideContext.SocialNetwork" Role="SocialNetwork" Multiplicity="1" />
           <End Type="SportGuideContext.LoginSocialNetwork" Role="LoginSocialNetwork" Multiplicity="*" />
@@ -747,18 +752,6 @@
             </Principal>
             <Dependent Role="LoginSocialNetwork">
               <PropertyRef Name="network_name" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__User__role__4C364F0E">
-          <End Type="SportGuideContext.UserRoles" Role="UserRoles" Multiplicity="1" />
-          <End Type="SportGuideContext.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRoles">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -795,6 +788,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HallImages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hall_id" Type="Int32" Nullable="false" />
+          <Property Name="src" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hall" Relationship="SportGuideContext.FK__HallImage__hall___67DE6983" FromRole="HallImages" ToRole="Hall" />
+        </EntityType>
+        <Association Name="FK__HallImage__hall___67DE6983">
+          <End Type="SportGuideContext.Hall" Role="Hall" Multiplicity="1" />
+          <End Type="SportGuideContext.HallImages" Role="HallImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HallImages">
+              <PropertyRef Name="hall_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -842,6 +862,7 @@
           <EntitySetMapping Name="Trainer">
             <EntityTypeMapping TypeName="SportGuideContext.Trainer">
               <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="register_date" ColumnName="register_date" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="birthday" ColumnName="birthday" />
@@ -938,19 +959,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="SportGuideContext.UserRoles">
-              <MappingFragment StoreEntitySet="UserRoles">
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Login">
             <EntityTypeMapping TypeName="SportGuideContext.Login">
               <MappingFragment StoreEntitySet="Login">
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HallImages">
+            <EntityTypeMapping TypeName="SportGuideContext.HallImages">
+              <MappingFragment StoreEntitySet="HallImages">
+                <ScalarProperty Name="src" ColumnName="src" />
+                <ScalarProperty Name="hall_id" ColumnName="hall_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="SportGuideContext.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

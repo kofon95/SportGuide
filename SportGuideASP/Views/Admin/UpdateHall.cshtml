@@ -1,0 +1,69 @@
+﻿@model SportGuideASP.Core.ViewModels.AdminViewModel.Hall
+
+@{
+    ViewBag.Title = "Изменение заведения";
+}
+
+<h2>Заведение</h2>
+
+@using (Html.BeginForm("UpdateHall", "Admin", FormMethod.Post, new { enctype= "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "Ошибка", new { @class = "text-danger" })
+	<div>
+		<span>Название</span>
+		<span>@Html.TextBoxFor(t => t.Name)</span>
+		@Html.ValidationMessageFor(t => t.Name, "", new { @class = "text-danger" })
+	</div>
+	<div>
+		<span>Адрес</span>
+		<span>@Html.TextBoxFor(t => t.Address)</span>
+		@Html.ValidationMessageFor(t => t.Address, "", new { @class = "text-danger" })
+	</div>
+	<div>
+		<select id="CityId" name="CityId" required data-bind=
+				"options: cities,
+				 optionsCaption: 'Выберите город',
+				 optionsValue: 'id',
+				 optionsText: 'name',
+				 value: 'id'">
+		</select>
+	</div>
+	<div>
+		<span>Описание</span>
+		<span>@Html.TextBoxFor(t => t.Description)</span>
+	</div>
+	<div>
+		<span></span>
+		<span><input type="file" name="Images" multiple value="Изображения" accept="image/*" /></span>
+		@Html.ValidationMessageFor(t => t.Images, "", new { @class = "text-danger col-md-4 validation-message" })
+	</div>
+	<div>
+		<input type="submit" value="Сохранить изменения" />
+	</div>
+}
+
+<hr/>
+<div>@Html.ActionLink("Назад", "Index")</div>
+
+@section Styles{
+<style>
+.container > form > *{
+	margin: 30px;
+}
+</style>
+}
+
+@section Scripts{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/knockout-3.4.0.js"></script>
+}
+<script>
+	(function () {
+		$.get(getApiUrl("get/cities?$orderby=Republic/name"), function (response) {
+			var cities = ko.observableArray(response);
+			ko.applyBindings({ cities: cities }, document.getElementById("CityId"));
+		});
+	})();
+</script>

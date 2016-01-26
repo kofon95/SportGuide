@@ -4,11 +4,11 @@ namespace Dal.Repository
 {
     internal class KindOfSportRepository :IRepository<KindOfSport, int>
     {
-        SportGuideEntities _ctx;
+        readonly SportGuideEntities _ctx;
 
-        public KindOfSportRepository(SportGuideEntities _ctx)
+        public KindOfSportRepository(SportGuideEntities ctx)
         {
-            this._ctx = _ctx;
+            _ctx = ctx;
         }
 
         public IQueryable<KindOfSport> GetAll()
