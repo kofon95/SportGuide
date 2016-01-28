@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Multi";
+}
+
+<h2>Multi</h2>
+
+
+<table class="records-model">
+	<thead>
+		<tr>
+			@*<td>Id</td>*@
+			<td>Название</td>
+			<td>Удаление</td>
+			@*<td>Адрес</td>*@
+			<td>Просмотр занятий</td>
+		</tr>
+	</thead>
+	<tbody id="halls" data-bind="foreach: halls">
+		<tr>
+			@*<td data-bind="text: id"></td>*@
+			<td>
+				<a data-bind="text: hall_name, attr: { href: '/Admin/UpdateHall/' + id }"></a>
+			</td>
+			<td>
+				<a data-bind="attr: { target:'_blank', href: '/Admin/DeleteHall/' + id }" onclick="return confirm('Удалить заведение и все проводящиеся в нём занятия?')">Удалить</a>
+			</td>
+			@*<td data-bind="text: address"></td>*@
+			<td>
+				<button data-bind="click: $parent.getWorkout" >Просмотр</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="workout-table" class="records-model">
+	<thead>
+		<tr>
+			@*<td>Id</td>*@
+			<td>Изменить занятие</td>
+			<td>Просмотр</td>
+			<td>Удаление</td>
+			<td>Показ тренеров</td>
+		</tr>
+	</thead>
+	<tbody id="workout" data-bind="foreach: workout">
+		<tr>
+			@*<td data-bind="text: id"></td>*@
+			<td>
+				<a style="color: blue"
+				   data-bind="attr: { target:'_blank', href: '/Admin/UpdateWorkout/' + id }, text: info"></a>
+			</td>
+			<td>
+				<a data-bind="attr: { target:'_blank', href: '/Workout/' + id }, text: info"></a>
+			</td>
+			<td>
+				<a data-bind="attr: { href: '/Admin/DeleteWorkout/' + id }, text: 'Удалить: ' + info" onclick="return confirm('Удалить занятие?')"></a>
+			</td>
+			<td>
+				<button data-bind="click: $parent.showTrainers">Тренеры</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div style="background-color: gray;" id="trainer" data-bind="with: trainer">
+	<div data-bind="text: 'id: ' + id"></div>
+	<div data-bind="text: 'Имя: ' + name"></div>
+	<div data-bind="text: 'Тел.: ' + phone_number"></div>
+	<div><img style="border: 2px solid black; width: 300px;" data-bind="attr: {src: photo_src}" /></div>
+	<div data-bind="text: 'Зарегестрирован: ' + register_date"></div>
+	<div><a style="color: white;" data-bind="attr: { target:'_blank', href: '/Admin/UpdateTrainer/' + id }">Изменить данные</a></div>
+	<div><a style="color: lightgreen;" data-bind="attr: { href: '/Admin/DeleteTrainer/' + id }" onclick="return confirm('Удалить тренера и все занятия, что он преподаёт?')">Удалить тренера</a></div>
+</div>
+
+@section Styles{
+	<link href="~/Content/Search/table.css" rel="stylesheet" />
+}
+@section Scripts{
+	<script src="~/Scripts/knockout-3.4.0.js"></script>
+}
+<script>
+	(function () {
+		$.get(getApiUrl("get/Halls"), function (response) {
+			var viewModel = {
+				halls: ko.observableArray(response),
+				getWorkout: function (hall) {
+					findWorkoutByHallId(hall.id);
+				}
+			};
+			ko.applyBindings(viewModel, document.getElementById("halls"));
+		});
+
+
+		var workoutViewModel = {
+			workout: ko.observableArray([]),
+			workoutVisible: false,
+			showTrainers: function (workout) {
+				if (!workout.Trainer) {
+					alert("Проводится без тренера");
+					return;
+				}
+				findTrainerById(workout.Trainer.id);
+			}
+		};
+		ko.applyBindings(workoutViewModel, document.getElementById("workout"));
+
+		function findWorkoutByHallId(id) {
+			$.get(getApiUrl("get/Workouts?$filter=(Hall/id+eq+" + id + ")"), function (workout) {
+				if (workout.length === 0) {
+					alert("В данном заведении занятия не проводятся");
+					return;
+				}
+				workoutViewModel.workout(workout);
+				workoutViewModel.workoutVisible = true;
+			});
+		}
+
+
+		var trainerViewModel = {
+			trainer: ko.observable(),
+			foo: function () {
+				console.log("foo");
+			}
+		};
+		ko.applyBindings(trainerViewModel, document.getElementById("trainer"));
+		function findTrainerById(id) {
+			$.get(getApiUrl("get/Trainers?$filter=(id+eq+" + id + ")"), function(trainer) {
+				trainerViewModel.trainer(trainer[0]);
+			});
+		}
+	})(); // end global function
+</script>

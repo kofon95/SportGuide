@@ -9,12 +9,14 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static SportGuideASP.Core.Consts;
+using System.Web.Security;
 using static SportGuideASP.StaticData;
+using static Utils.Consts;
 
 namespace SportGuideASP.Controllers
 {
     [Authorize]
+    [Authorize(Roles = "Moder,Admin")]
     public class AdminController : Controller
     {
         DataManager _dm = new DataManager();
@@ -25,14 +27,15 @@ namespace SportGuideASP.Controllers
             return View();
         }
 
+        #region Add
+
         [HttpGet]
-        [Authorize(Roles = "Moder, Admin")]
         public ActionResult AddHall()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult AddHall(AdminViewModel.Hall hallvm)
+        public ActionResult AddHall(AdminViewModel.HallAddUpdate hallvm)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +49,7 @@ namespace SportGuideASP.Controllers
             {
                 if (Request.Files[0].ContentLength > 0)
                     fileNames = fileUploader.SaveImagesWithResizingGetFileNames(
-                        Paths.HallImageSource,
+                        FilePaths.HallImageSource,
                         ContentLengths.Hall_MaxWidthImage,
                         ContentLengths.Hall_MaxHeightImage);
                 else
@@ -87,40 +90,12 @@ namespace SportGuideASP.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateHall(int id)
-        {
-            var h = _dm.Hall.GetAll().Include(t=>t.HallImages).First(t=>t.id ==id);
-            var hallVM = new AdminViewModel.Hall
-            {
-                Address=h.address,
-                CityId=h.city_id,
-                Description=h.description,
-                Images= h.HallImages.Select(t=>t.src),
-                Name=h.hall_name,
-            };
-
-            return View(hallVM);
-        }
-        [HttpPost]
-        public ActionResult UpdateHall(int id, AdminViewModel.Hall hallVM)
-        {
-            Hall hall = _dm.Hall.GetAll().Include(t => t.HallImages).First(t => t.id == id);
-            hall.address = hallVM.Address;
-            hall.city_id = hallVM.CityId;
-            hall.description = hallVM.Description;
-            hall.hall_name = hallVM.Name;
-
-            _dm.Hall.Update(hall);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
         public ActionResult AddWorkout()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult AddWorkout(AdminViewModel.Workout workout)
+        public ActionResult AddWorkout(AdminViewModel.WorkoutAddUpdate workout)
         {
             if (!ModelState.IsValid)
             {
@@ -149,56 +124,6 @@ namespace SportGuideASP.Controllers
             var addedId = _dm.Workout.Save(addition).id;
             return RedirectToRoute("Workout", new { id = addedId });
         }
-        [HttpGet]
-        public ActionResult UpdateWorkout(int id)
-        {
-            var w = _dm.Workout.GetById(id);
-            var workoutVM = new AdminViewModel.Workout
-            {
-                Id = w.id,
-                Info = w.info,
-                HallId = w.hall_id,
-                KindOfSportId = w.kind_of_sport_id,
-                PaymentForMonth = w.paiment_for_month,
-                TrainerId = w.trainer_id,
-                MaxAge = w.max_age,
-                MinAge = w.min_age,
-                Time = w.time,
-                Mon = w.mon,
-                Tue = w.tue,
-                Wed = w.wed,
-                Thu = w.thu,
-                Fri = w.fri,
-                Sat = w.sat,
-                Sun = w.sun,
-            };
-            return View(workoutVM);
-        }
-
-        [HttpPost]
-        public ActionResult UpdateWorkout(int id, AdminViewModel.Workout workoutVM)
-        {
-            var w = workoutVM;
-            Workout workout = _dm.Workout.GetById(id);
-            workout.info = w.Info;
-            workout.hall_id = w.HallId;
-            workout.kind_of_sport_id = w.KindOfSportId;
-            workout.paiment_for_month = w.PaymentForMonth;
-            workout.trainer_id = w.TrainerId;
-            workout.max_age = w.MaxAge;
-            workout.min_age = w.MinAge;
-            workout.time = w.Time;
-            workout.mon = w.Mon;
-            workout.tue = w.Tue;
-            workout.wed = w.Wed;
-            workout.thu = w.Thu;
-            workout.fri = w.Fri;
-            workout.sat = w.Sat;
-            workout.sun = w.Sun;
-
-            _dm.Workout.Update(workout);
-            return RedirectToAction("Index");
-        }
 
         [HttpGet]
         public ActionResult AddTrainer()
@@ -206,7 +131,7 @@ namespace SportGuideASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddTrainer(AdminViewModel.Trainer trainer)
+        public ActionResult AddTrainer(AdminViewModel.TrainerAddUpdate trainer)
         {
             if (!ModelState.IsValid)
             {
@@ -221,7 +146,7 @@ namespace SportGuideASP.Controllers
             if (fileExists)
             {
                 uploader = new FileUploader(this);
-                images = uploader.SaveImagesWithResizingGetFileNames(Paths.TrainerImageSource, ContentLengths.Trainer_MaxWidthImage, ContentLengths.Trainer_MaxHeightImage)[0];
+                images = uploader.SaveImagesWithResizingGetFileNames(FilePaths.TrainerImageSource, ContentLengths.Trainer_MaxWidthImage, ContentLengths.Trainer_MaxHeightImage)[0];
             }
             Trainer addition = new Trainer
             {
@@ -245,11 +170,93 @@ namespace SportGuideASP.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
+
+        #region Update
+
+        [HttpGet]
+        public ActionResult UpdateHall(int id)
+        {
+            var h = _dm.Hall.GetAll().Include(t=>t.HallImages).First(t=>t.id ==id);
+            var hallVM = new AdminViewModel.HallAddUpdate
+            {
+                Address=h.address,
+                CityId=h.city_id,
+                Description=h.description,
+                Images= h.HallImages.Select(t=>t.src),
+                Name=h.hall_name,
+            };
+
+            return View(hallVM);
+        }
+        [HttpPost]
+        public ActionResult UpdateHall(int id, AdminViewModel.HallAddUpdate hallVM)
+        {
+            Hall hall = _dm.Hall.GetAll().Include(t => t.HallImages).First(t => t.id == id);
+            hall.address = hallVM.Address;
+            hall.city_id = hallVM.CityId;
+            hall.description = hallVM.Description;
+            hall.hall_name = hallVM.Name;
+
+            _dm.Hall.Update(hall);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult UpdateWorkout(int id)
+        {
+            var w = _dm.Workout.GetById(id);
+            var workoutVM = new AdminViewModel.WorkoutAddUpdate
+            {
+                Id = w.id,
+                Info = w.info,
+                HallId = w.hall_id,
+                KindOfSportId = w.kind_of_sport_id,
+                PaymentForMonth = w.paiment_for_month,
+                TrainerId = w.trainer_id,
+                MaxAge = w.max_age,
+                MinAge = w.min_age,
+                Time = w.time,
+                Mon = w.mon,
+                Tue = w.tue,
+                Wed = w.wed,
+                Thu = w.thu,
+                Fri = w.fri,
+                Sat = w.sat,
+                Sun = w.sun,
+            };
+            return View(workoutVM);
+        }
+        [HttpPost]
+        public ActionResult UpdateWorkout(int id, AdminViewModel.WorkoutAddUpdate workoutVM)
+        {
+            var w = workoutVM;
+            Workout workout = _dm.Workout.GetById(id);
+            workout.info = w.Info;
+            workout.hall_id = w.HallId;
+            workout.kind_of_sport_id = w.KindOfSportId;
+            workout.paiment_for_month = w.PaymentForMonth;
+            workout.trainer_id = w.TrainerId;
+            workout.max_age = w.MaxAge;
+            workout.min_age = w.MinAge;
+            workout.time = w.Time;
+            workout.mon = w.Mon;
+            workout.tue = w.Tue;
+            workout.wed = w.Wed;
+            workout.thu = w.Thu;
+            workout.fri = w.Fri;
+            workout.sat = w.Sat;
+            workout.sun = w.Sun;
+
+            _dm.Workout.Update(workout);
+            return RedirectToAction("Index");
+        }
+        
         [HttpGet]
         public ActionResult UpdateTrainer(int id)
         {
             var trainer = _dm.Trainer.GetById(id);
-            var trainerVM = new AdminViewModel.Trainer
+            var trainerVM = new AdminViewModel.TrainerAddUpdate
             {
                 Id = trainer.id,
                 Name = trainer.name,
@@ -258,7 +265,7 @@ namespace SportGuideASP.Controllers
             };
             return View(trainerVM);
         }
-        public ActionResult UpdateTrainer(AdminViewModel.Trainer trainer)
+        public ActionResult UpdateTrainer(AdminViewModel.TrainerAddUpdate trainer)
         {
             if (!ModelState.IsValid)
             {
@@ -274,6 +281,74 @@ namespace SportGuideASP.Controllers
             _dm.Trainer.Update(oldTrainer);
 
             return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region Delete
+
+        public ActionResult DeleteHall(int id)
+        {
+            var hall = _dm.Hall.GetAll().AsNoTracking()
+                .Include(t => t.HallImages)
+                .Include(t => t.Workout)
+                .First(t => t.id == id);
+
+            _dm.Workout.Delete(hall.Workout);
+            _dm.HallImages.Delete(hall.HallImages);
+            new FileUploader(this)
+                .DeleteFiles(hall.HallImages.Select(t => t.src).ToArray());
+            _dm.Hall.Delete(hall);
+
+            return Redirect(Request.UrlReferrer?.AbsoluteUri ?? "/");
+        }
+        public ActionResult DeleteWorkout(int id)
+        {
+            _dm.Workout.DeleteById(id);
+            return Redirect(Request.UrlReferrer?.AbsoluteUri ?? "/");
+        }
+
+        public ActionResult DeleteTrainer(int id)
+        {
+            var trainer = _dm.Trainer.GetAll().AsNoTracking()
+                .Include(t => t.Workout)
+                .Where(t=>t.id == id)
+                .First();
+
+            _dm.Workout.Delete(trainer.Workout);
+            _dm.Trainer.Delete(trainer);
+            return Redirect(Request.UrlReferrer?.AbsoluteUri ?? "/");
+        }
+
+        #endregion
+
+        #region Search
+
+        [HttpGet]
+        public ActionResult Halls()
+        {
+            //Roles.GetRolesForUser();
+            //Roles.GetAllRoles();
+
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Workouts()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Trainers()
+        {
+            return View();
+        }
+
+        #endregion
+
+        [HttpGet]
+        public ActionResult Multi()
+        {
+            return View();
         }
     }
 }

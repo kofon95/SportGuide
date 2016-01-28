@@ -136,13 +136,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="info" Type="nvarchar" MaxLength="256" />
           <Property Name="hall_id" Type="int" Nullable="false" />
           <Property Name="kind_of_sport_id" Type="int" Nullable="false" />
-          <Property Name="trainer_id" Type="int" Nullable="false" />
+          <Property Name="trainer_id" Type="int" />
           <Property Name="paiment_for_month" Type="int" Nullable="false" />
           <Property Name="min_age" Type="smallint" Nullable="false" />
           <Property Name="max_age" Type="smallint" Nullable="false" />
-          <Property Name="info" Type="nvarchar" MaxLength="256" />
           <Property Name="time" Type="time" Precision="7" />
           <Property Name="mon" Type="bit" Nullable="false" />
           <Property Name="tue" Type="bit" Nullable="false" />
@@ -284,7 +284,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__hall_id__6DCC4D03">
+        <Association Name="FK__Workout__hall_id__3F9B6DFF">
           <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
@@ -296,7 +296,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__kind_of__02FC7413">
+        <Association Name="FK__Workout__kind_of__3DB3258D">
           <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
@@ -308,8 +308,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__trainer__03F0984C">
-          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
+        <Association Name="FK__Workout__trainer__3EA749C6">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Trainer">
@@ -381,15 +381,15 @@
             <End Role="UserGender" EntitySet="UserGender" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__hall_id__6DCC4D03" Association="Self.FK__Workout__hall_id__6DCC4D03">
+          <AssociationSet Name="FK__Workout__hall_id__3F9B6DFF" Association="Self.FK__Workout__hall_id__3F9B6DFF">
             <End Role="Hall" EntitySet="Hall" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__kind_of__02FC7413" Association="Self.FK__Workout__kind_of__02FC7413">
+          <AssociationSet Name="FK__Workout__kind_of__3DB3258D" Association="Self.FK__Workout__kind_of__3DB3258D">
             <End Role="KindOfSport" EntitySet="KindOfSport" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__trainer__03F0984C" Association="Self.FK__Workout__trainer__03F0984C">
+          <AssociationSet Name="FK__Workout__trainer__3EA749C6" Association="Self.FK__Workout__trainer__3EA749C6">
             <End Role="Trainer" EntitySet="Trainer" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
@@ -441,18 +441,6 @@
           <Property Name="hall_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Hall" Relationship="Self.FK__PhoneOfHa__hall___44FF419A" FromRole="PhoneOfHall" ToRole="Hall" />
         </EntityType>
-        <EntityType Name="Trainer">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="photo_src" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="phone_number" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Workout" Relationship="Self.FK__Workout__trainer__03F0984C" FromRole="Trainer" ToRole="Workout" />
-          <Property Name="register_date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="Workout">
           <Key>
             <PropertyRef Name="id" />
@@ -460,7 +448,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="hall_id" Type="Int32" Nullable="false" />
           <Property Name="kind_of_sport_id" Type="Int32" Nullable="false" />
-          <Property Name="trainer_id" Type="Int32" Nullable="false" />
+          <Property Name="trainer_id" Type="Int32" />
           <Property Name="paiment_for_month" Type="Int32" Nullable="false" />
           <Property Name="min_age" Type="Int16" Nullable="false" />
           <Property Name="max_age" Type="Int16" Nullable="false" />
@@ -475,7 +463,7 @@
           <Property Name="sun" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Hall" Relationship="Self.FK__Workout__hall_id__02084FDA" FromRole="Workout" ToRole="Hall" />
           <NavigationProperty Name="KindOfSport" Relationship="Self.FK__Workout__kind_of__02FC7413" FromRole="Workout" ToRole="KindOfSport" />
-          <NavigationProperty Name="Trainer" Relationship="Self.FK__Workout__trainer__03F0984C" FromRole="Workout" ToRole="Trainer" />
+          <NavigationProperty Name="Trainer" Relationship="SportGuideContext.FK__Workout__trainer__3EA749C6" FromRole="Workout" ToRole="Trainer" />
         </EntityType>
         <Association Name="FK__KindOfSpo__categ__34C8D9D1">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
@@ -525,24 +513,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__trainer__03F0984C">
-          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
-          <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Trainer">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Workout">
-              <PropertyRef Name="trainer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SportGuideEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Hall" EntityType="Self.Hall" />
           <EntitySet Name="KindOfSport" EntityType="Self.KindOfSport" />
           <EntitySet Name="PhoneOfHall" EntityType="Self.PhoneOfHall" />
-          <EntitySet Name="Trainer" EntityType="Self.Trainer" />
           <EntitySet Name="Workout" EntityType="Self.Workout" />
           <AssociationSet Name="FK__KindOfSpo__categ__34C8D9D1" Association="Self.FK__KindOfSpo__categ__34C8D9D1">
             <End Role="Category" EntitySet="Category" />
@@ -558,10 +533,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__Workout__kind_of__02FC7413" Association="Self.FK__Workout__kind_of__02FC7413">
             <End Role="KindOfSport" EntitySet="KindOfSport" />
-            <End Role="Workout" EntitySet="Workout" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Workout__trainer__03F0984C" Association="Self.FK__Workout__trainer__03F0984C">
-            <End Role="Trainer" EntitySet="Trainer" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
           <EntitySet Name="HallYandexMapLocation" EntityType="SportGuideContext.HallYandexMapLocation" />
@@ -610,6 +581,11 @@
             <End Role="HallImages" EntitySet="HallImages" />
           </AssociationSet>
           <EntitySet Name="UserRoles" EntityType="SportGuideContext.UserRoles" />
+          <EntitySet Name="Trainer" EntityType="SportGuideContext.Trainer" />
+          <AssociationSet Name="FK__Workout__trainer__3EA749C6" Association="SportGuideContext.FK__Workout__trainer__3EA749C6">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="Workout" EntitySet="Workout" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="HallYandexMapLocation">
           <Key>
@@ -815,6 +791,30 @@
           </Key>
           <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="photo_src" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Name="register_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Workout" Relationship="SportGuideContext.FK__Workout__trainer__3EA749C6" FromRole="Trainer" ToRole="Workout" />
+        </EntityType>
+        <Association Name="FK__Workout__trainer__3EA749C6">
+          <End Type="SportGuideContext.Trainer" Role="Trainer" Multiplicity="0..1" />
+          <End Type="SportGuideContext.Workout" Role="Workout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workout">
+              <PropertyRef Name="trainer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -856,18 +856,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="phone_number" ColumnName="phone_number" />
                 <ScalarProperty Name="hall_id" ColumnName="hall_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Trainer">
-            <EntityTypeMapping TypeName="SportGuideContext.Trainer">
-              <MappingFragment StoreEntitySet="Trainer">
-                <ScalarProperty Name="register_date" ColumnName="register_date" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="birthday" ColumnName="birthday" />
-                <ScalarProperty Name="photo_src" ColumnName="photo_src" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -981,6 +969,18 @@
             <EntityTypeMapping TypeName="SportGuideContext.UserRoles">
               <MappingFragment StoreEntitySet="UserRoles">
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainer">
+            <EntityTypeMapping TypeName="SportGuideContext.Trainer">
+              <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="register_date" ColumnName="register_date" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="photo_src" ColumnName="photo_src" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

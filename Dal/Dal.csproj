@@ -78,16 +78,10 @@
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DalExtension.cs" />
-    <Compile Include="HallImages.cs">
-      <DependentUpon>SportGuideModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\SqlRepository.cs" />
-    <Compile Include="LoginSocialNetwork.cs">
-      <DependentUpon>SportGuideModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\LoggerSqlRepository.cs" />
-    <Compile Include="DataManager.cs" />
     <Compile Include="Hall.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HallImages.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HallYandexMapLocation.cs">
@@ -99,9 +93,15 @@
     <Compile Include="Login.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LoginSocialNetwork.cs">
+      <DependentUpon>SportGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PhoneOfHall.cs">
       <DependentUpon>SportGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\SqlRepository.cs" />
+    <Compile Include="Repository\LoggerSqlRepository.cs" />
+    <Compile Include="DataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Republic.cs">

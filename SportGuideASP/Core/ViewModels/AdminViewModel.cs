@@ -9,7 +9,7 @@ namespace SportGuideASP.Core.ViewModels
 {
     public class AdminViewModel
     {
-        public class Hall
+        public class HallAddUpdate
         {
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
             [StringLength(20, MinimumLength =2, ErrorMessageResourceName =nameof(Resource.MinimumSymbols), ErrorMessageResourceType =typeof(Resource))]
@@ -23,7 +23,7 @@ namespace SportGuideASP.Core.ViewModels
             public IEnumerable<string> Images { get; set; }
         }
 
-        public class Workout
+        public class WorkoutAddUpdate
         {
             public int Id;
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
@@ -33,8 +33,8 @@ namespace SportGuideASP.Core.ViewModels
             public int KindOfSportId { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.ChooseSomething), ErrorMessageResourceType = typeof(Resource))]
             public int HallId { get; set; }
-            [Required(ErrorMessageResourceName = nameof(Resource.ChooseSomething), ErrorMessageResourceType = typeof(Resource))]
-            public int TrainerId { get; set; }
+            //[Required(ErrorMessageResourceName = nameof(Resource.ChooseSomething), ErrorMessageResourceType = typeof(Resource))]
+            public int? TrainerId { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
             public int PaymentForMonth { get; set; }
 
@@ -54,7 +54,7 @@ namespace SportGuideASP.Core.ViewModels
             public bool Sun { get; set; }
         }
 
-        public class Trainer
+        public class TrainerAddUpdate
         {
             public int Id { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
@@ -64,6 +64,20 @@ namespace SportGuideASP.Core.ViewModels
             public DateTime Birthday { get; set; }
             //public string PhotoSrc { get; set; }
             public string PhoneNumber { get; set; }
+        }
+
+        // Client
+        public class HallSearch
+        {
+
+        }
+        public class WorkoutSearch
+        {
+
+        }
+        public class TrainerSearch
+        {
+
         }
     }
 }

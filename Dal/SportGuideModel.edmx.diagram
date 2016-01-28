@@ -9,13 +9,11 @@
         <EntityTypeShape EntityType="SportGuideContext.Hall" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.KindOfSport" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.PhoneOfHall" Width="1.5" PointX="11.375" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SportGuideContext.Trainer" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Workout" Width="1.5" PointX="5.75" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="SportGuideContext.FK__KindOfSpo__categ__34C8D9D1" ManuallyRouted="false" />
         <AssociationConnector Association="SportGuideContext.FK__PhoneOfHa__hall___44FF419A" ManuallyRouted="false" />
         <AssociationConnector Association="SportGuideContext.FK__Workout__hall_id__02084FDA" ManuallyRouted="false" />
         <AssociationConnector Association="SportGuideContext.FK__Workout__kind_of__02FC7413" ManuallyRouted="false" />
-        <AssociationConnector Association="SportGuideContext.FK__Workout__trainer__03F0984C" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SportGuideContext.HallYandexMapLocation" Width="1.5" PointX="11.375" PointY="0.5" />
         <AssociationConnector Association="SportGuideContext.FK__HallYandexMa__id__3C34F16F" />
         <EntityTypeShape EntityType="SportGuideContext.City" Width="1.5" PointX="8.25" PointY="7" />
@@ -35,6 +33,8 @@
         <EntityTypeShape EntityType="SportGuideContext.HallImages" Width="1.5" PointX="11.375" PointY="2.5" />
         <AssociationConnector Association="SportGuideContext.FK__HallImage__hall___67DE6983" />
         <EntityTypeShape EntityType="SportGuideContext.UserRoles" Width="1.5" PointX="2.625" PointY="8.625" />
+        <EntityTypeShape EntityType="SportGuideContext.Trainer" Width="1.5" PointX="2.875" PointY="3.625" />
+        <AssociationConnector Association="SportGuideContext.FK__Workout__trainer__3EA749C6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

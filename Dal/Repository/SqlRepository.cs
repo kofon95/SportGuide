@@ -21,6 +21,28 @@ namespace Dal.Repository
             _entities.Remove(entity);
             _ctx.SaveChanges();
         }
+        public virtual void Delete(IEnumerable<T> entities)
+        {
+            // Cannot delete many here!
+            bool oldValidateOnSaveEnabled = _ctx.Configuration.ValidateOnSaveEnabled;
+            try
+            {
+                _ctx.Configuration.ValidateOnSaveEnabled = false;
+
+                var entityList = entities.ToList();
+                for (int i = 0; i < entityList.Count; ++i)
+                {
+                    _ctx.Entry(entityList[i]).State = EntityState.Deleted;
+                    //_entities.Remove(entity);
+                }
+                //_entities.RemoveRange(entities);
+                _ctx.SaveChanges();
+            }
+            finally
+            {
+                _ctx.Configuration.ValidateOnSaveEnabled = true;
+            }
+        }
 
         public virtual void DeleteById(int id)
         {

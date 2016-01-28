@@ -29,7 +29,6 @@ namespace Dal
         public virtual DbSet<Hall> Hall { get; set; }
         public virtual DbSet<KindOfSport> KindOfSport { get; set; }
         public virtual DbSet<PhoneOfHall> PhoneOfHall { get; set; }
-        public virtual DbSet<Trainer> Trainer { get; set; }
         public virtual DbSet<Workout> Workout { get; set; }
         public virtual DbSet<HallYandexMapLocation> HallYandexMapLocation { get; set; }
         public virtual DbSet<City> City { get; set; }
@@ -41,5 +40,6 @@ namespace Dal
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<HallImages> HallImages { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
+        public virtual DbSet<Trainer> Trainer { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Dal
         public int id { get; set; }
         public int hall_id { get; set; }
         public int kind_of_sport_id { get; set; }
-        public int trainer_id { get; set; }
+        public Nullable<int> trainer_id { get; set; }
         public int paiment_for_month { get; set; }
         public short min_age { get; set; }
         public short max_age { get; set; }

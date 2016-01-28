@@ -21,8 +21,9 @@ namespace Dal.Repository
         TEntity[] Save(IEnumerable<TEntity> entity);
         #endregion
 
-        #region Delete
+        #region DELETE
         void Delete(TEntity entity);
+        void Delete(IEnumerable<TEntity> entities);
         void DeleteById(TId id);
         #endregion
     }

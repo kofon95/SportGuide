@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportGuideASP", "SportGuide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportGuideWebAPI", "SportGuideWebAPI\SportGuideWebAPI.csproj", "{EC7A6FCD-19DC-43EA-9D1F-CAC2D2C07968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{5E68FBFA-F1EE-4BB6-B9C0-C8834083BB9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EC7A6FCD-19DC-43EA-9D1F-CAC2D2C07968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC7A6FCD-19DC-43EA-9D1F-CAC2D2C07968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC7A6FCD-19DC-43EA-9D1F-CAC2D2C07968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E68FBFA-F1EE-4BB6-B9C0-C8834083BB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E68FBFA-F1EE-4BB6-B9C0-C8834083BB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E68FBFA-F1EE-4BB6-B9C0-C8834083BB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E68FBFA-F1EE-4BB6-B9C0-C8834083BB9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

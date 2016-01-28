@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using SportGuideASP.Core;
 using static SportGuideASP.StaticData;
-using static SportGuideASP.Core.Consts;
+using static Utils.Consts;
 
 namespace SportGuideASP.Controllers
 {
@@ -91,11 +91,11 @@ namespace SportGuideASP.Controllers
                         CategoryName = c.category_name,
 
                         TrainerName = t.name,
-                        TrainerImageSource = Paths.TrainerImageSource + t.photo_src,
+                        TrainerImageSource = UrlPaths.TrainerImageSource + t.photo_src,
                         TrainersPhoneNumber = t.phone_number,
 
                         HallName = h.hall_name,
-                        HallImages = h.HallImages.Select(t => Paths.HallImageSource + t.src),
+                        HallImages = h.HallImages.Select(t => UrlPaths.HallImageSource + t.src),
                         Address = h.address,
                         Longitude = m.longitude,
                         Latitude = m.latitude,

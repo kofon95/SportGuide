@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.OData;
+using static Utils.Consts;
 
 namespace SportGuideWebAPI.Controllers.v1
 {
@@ -39,7 +40,7 @@ namespace SportGuideWebAPI.Controllers.v1
         public IQueryable<object> Trainers()
         {
             return _dm.Trainer.GetAll().AsNoTracking()
-                .Select(t => new { t.id, t.name, t.birthday, t.phone_number, t.photo_src, t.register_date });
+                .Select(t => new { t.id, t.name, t.birthday, t.phone_number, photo_src = t.photo_src == null ? null : UrlPaths.TrainerImageSource + t.photo_src, t.register_date });
         }
 
         [HttpGet]
@@ -56,7 +57,7 @@ namespace SportGuideWebAPI.Controllers.v1
                     t.gender,
                     t.birthday,
                     t.photo_is_local,
-                    t.photo_src,
+                    photo_src = t.photo_src == null ? null : UrlPaths.TrainerImageSource + t.photo_src,
                     t.first_ip,
                     t.role,
 
@@ -85,9 +86,9 @@ namespace SportGuideWebAPI.Controllers.v1
                     t.hall_name,
                     t.id,
                     City = new { t.City.id, t.City.name },
-                    HallImages = t.HallImages.Select(i => new { i.id, i.src }),
+                    HallImages = t.HallImages.Select(i => new { i.id, src = i.src == null ? null : i.src }),
                     PhoneOfHall = t.PhoneOfHall.Select(p => new { p.id, p.phone_number }),
-                    HallYandexMapLocation = new
+                    HallYandexMapLocation = t.HallYandexMapLocation == null ? null : new
                     {
                         t.HallYandexMapLocation.latitude,
                         t.HallYandexMapLocation.longitude
@@ -140,12 +141,12 @@ namespace SportGuideWebAPI.Controllers.v1
                             t.KindOfSport.min_age,
                             Category = new { t.KindOfSport.Category.id, t.KindOfSport.Category.category_name }
                         },
-                        Trainer = new
+                        Trainer = t.Trainer == null ? null : new
                         {
                             t.Trainer.id,
                             t.Trainer.name,
                             t.Trainer.phone_number,
-                            t.Trainer.photo_src,
+                            photo_src = t.Trainer.photo_src == null ? null : t.Trainer.photo_src,
                             t.Trainer.birthday
                         },
                     }));

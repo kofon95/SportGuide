@@ -51,22 +51,29 @@
                             <span id="kind-of-sport-container" class="wrapper-select"></span>
                         </div>
                         <script>
-                            // init select elem of category by "get parameter"
-                            !function () {
-                                var categs = document.getElementById("sport-category");
-                                categs.value = @{
-									string catId = Request.Params["categoryId"] ?? "''";
-									@MvcHtmlString.Create(catId)
+							// init select elem of category by "get parameter"
+							!function () {
+								var categs = document.getElementById("sport-category");
+								categs.value = @{
+									string catId = Request.Params["categoryId"];
+									if (string.IsNullOrEmpty(catId))
+									{
+										@MvcHtmlString.Create("''")
+									}
+									else
+									{
+										@catId
+									}
                                 };
 
-                                // on change of select elem
-	                            $(document).ready(function() {
-		                            //$(categs).change(); // may
-		                            var ev = document.createEvent("HTMLEvents");
-		                            ev.initEvent("change", false, true);
-		                            categs.dispatchEvent(ev);
-	                            });
-                            }()
+								// on change of select elem
+								$(document).ready(function() {
+									//$(categs).change(); // may
+									var ev = document.createEvent("HTMLEvents");
+									ev.initEvent("change", false, true);
+									categs.dispatchEvent(ev);
+								});
+							}()
                         </script>
                     </div>
 				}
@@ -76,10 +83,13 @@
 					@if (User.Identity.IsAuthenticated)
 					{
 						<li>@Html.ActionLink("Выход", "SignOut", "User")</li>
-						<li>@Html.ActionLink("Админ", "Index", "Admin")</li>
 					}
 					else {
 						<li>@Html.ActionLink("Вход", "SignIn", "User")</li>
+					}
+					@if (Html.CanGoToAdminPanel())
+					{
+						<li>@Html.ActionLink("Админ", "Index", "Admin")</li>
 					}
 					<li>@Html.ActionLink("Регистрация", "Register", "User")</li>
 					<li>@Html.ActionLink("О проекте", "About", "Common")</li>

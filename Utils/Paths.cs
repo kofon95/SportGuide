@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SportGuideASP.Core
+namespace Utils
 {
     public static class Consts
     {
-        public static class Paths
+        public static class UrlPaths
+        {
+            public const string GlobalSource = "/source/";
+            public const string TrainerImageSource = GlobalSource + "img-data/";
+            public const string HallImageSource = GlobalSource + "img-data/";
+        }
+        public static class FilePaths
         {
             public const string GlobalSource = "~/source/";
             public const string TrainerImageSource = GlobalSource + "img-data/";

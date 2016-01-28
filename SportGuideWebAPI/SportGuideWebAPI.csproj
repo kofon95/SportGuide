@@ -135,6 +135,10 @@
       <Project>{b6502ea8-1a6a-46dc-882b-cbd96417f2fa}</Project>
       <Name>Dal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{5e68fbfa-f1ee-4bb6-b9c0-c8834083bb9f}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,6 +1,7 @@
 ﻿using Dal;
 using SportGuideASP.Core;
 using SportGuideASP.Core.Private;
+using SportGuideASP.Core.Util;
 using SportGuideASP.Core.ViewModels;
 using SportGuideASP.Properties;
 using System;
@@ -9,9 +10,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using static SportGuideASP.StaticData;
-using System.Security.Cryptography;
-using System.Text;
-using SportGuideASP.Core.Util;
 
 namespace SportGuideASP.Controllers
 {
@@ -149,7 +147,11 @@ namespace SportGuideASP.Controllers
         {
             Log.Trace("SignOut: " + User.Identity.Name);
             FormsAuthentication.SignOut();
-            return Redirect(Request.UrlReferrer.AbsoluteUri ?? "/");
+
+            var referer = Request.UrlReferrer;
+            if (referer?.LocalPath?.StartsWith("/Admin") as bool? == false)
+                return Redirect(referer?.AbsoluteUri);
+            return Redirect("/");
         }
 
         [HttpGet]

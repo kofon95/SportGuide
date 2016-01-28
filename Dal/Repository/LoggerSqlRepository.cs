@@ -95,6 +95,20 @@ namespace Dal.Repository
                 throw;
             }
         }
+        public override void Delete(IEnumerable<T> entities)
+        {
+            _logger.Trace("Delete many");
+            try
+            {
+                base.Delete(entities);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Delete many", entities);
+                throw;
+            }
+        }
+
         public override void DeleteById(int id)
         {
             _logger.Trace("DeleteById", id);
