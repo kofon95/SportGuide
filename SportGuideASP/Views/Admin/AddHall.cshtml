@@ -31,13 +31,16 @@
 	</div>
 	<div>
 		<span>Описание</span>
-		<span>@Html.TextBoxFor(t => t.Description)</span>
+		<span>@Html.TextAreaFor(t => t.Description)</span>
 	</div>
 	<div>
 		<span></span>
 		<span><input type="file" name="Images" multiple value="Изображения" accept="image/*" /></span>
 		@Html.ValidationMessageFor(t => t.Images, "", new { @class = "text-danger col-md-4 validation-message" })
 	</div>
+	@Html.HiddenFor(t => t.LocationLongitude)
+	@Html.HiddenFor(t => t.LocationLatitude)
+	<div id="map" style="width: 640px; height: 360px;"></div>
 	<div>
 		<input type="submit" value="Save" />
 	</div>
@@ -58,6 +61,7 @@
 	<script src="~/Scripts/jquery.validate.min.js"></script>
 	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/Scripts/knockout-3.4.0.js"></script>
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 }
 <script>
 	(function () {
@@ -66,4 +70,11 @@
 			ko.applyBindings({ cities: cities }, document.getElementById("CityId"));
 		});
 	})();
+</script>
+
+<!--Yandex map-->
+<script src="~/Scripts/user/yamap/yamapinit.js"></script>
+<script>
+	YaMap.coords = [42.979618, 47.490981];
+	setTimeout(YaMap.startMap(), 10);
 </script>

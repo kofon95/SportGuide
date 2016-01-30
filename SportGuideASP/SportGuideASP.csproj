@@ -122,6 +122,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Search\workoutmap.css" />
+    <Content Include="Scripts\user\form_returnurl.js" />
+    <Content Include="Scripts\user\yamap\yamapinit.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="source\img-data\test-photo-src.jpg" />
@@ -136,7 +139,8 @@
     <Content Include="Content\site.css" />
     <Content Include="Content\site_adaptive.css" />
     <Content Include="Content\User\site.css" />
-    <Content Include="error.html" />
+    <Content Include="StatusPages\500.html" />
+    <Content Include="StatusPages\404.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="NLog.config">
@@ -159,7 +163,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
-    <Content Include="Scripts\filter_ajax.js" />
+    <Content Include="Scripts\user\filter_ajax.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -228,10 +232,12 @@
     <Content Include="Views\Admin\AddHall.cshtml" />
     <Content Include="Views\Admin\AddTrainer.cshtml" />
     <Content Include="Views\Admin\AddWorkout.cshtml" />
-    <Content Include="Views\Admin\Halls.cshtml" />
-    <Content Include="Views\Admin\Workouts.cshtml" />
-    <Content Include="Views\Admin\Trainers.cshtml" />
     <Content Include="Views\Admin\Multi.cshtml" />
+    <Content Include="Views\Search\Trainer.cshtml" />
+    <Content Include="Views\Search\GetTrainers.cshtml" />
+    <Content Include="Views\Admin\Trainers.cshtml" />
+    <Content Include="Views\Search\Hall.cshtml" />
+    <Content Include="Views\Search\GetHalls.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -241,8 +247,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="source\img-css\" />
+    <Folder Include="Views\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj">

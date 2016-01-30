@@ -9,12 +9,21 @@
 </div>
 
 <div class="trainer-container">
-	Введёт: <span class="trainer-name">@Model.TrainerName</span>
-	<img class="trainer-picture" title="Изобрж." src="@Model.TrainerImageSource" />
+	Введёт: <span class="trainer-name"><a href="/Trainer/@Model.TrainerId">@Model.TrainerName</a></span>
+    @if (Model.TrainerImageSource != null)
+    {
+		<a href="/Trainer/@Model.TrainerId">
+			<img class="trainer-picture" title="Изобрж." src="@Model.TrainerImageSource" />
+		</a>
+	}
 	<div class="phone-container">
 		<span>Тел.:</span>
 		<span class="phone-number">@Model.TrainersPhoneNumber</span>
 	</div>
+</div>
+
+<div>
+    Требуемый пол - @(Model.GenderOfAthlete == null ? "неважен" : Model.GenderOfAthlete == "m" ? "мужской" : "женский")
 </div>
 
 <div class="time-of-workout">
@@ -26,10 +35,10 @@
 			<span>@time</span>
 		}
 	}
-	</div>
-	
+</div>
 
-	<div class="day-of-week-container">
+
+<div class="day-of-week-container">
 	<div class="day-of-week-title">Дни недели</div>
 	@{
 		string yes = "class=\"yes\"";
@@ -51,6 +60,19 @@
 </div>@*END DAYS*@
 
 <div>
+	Возрастные ограничения:
+	<span>от @Model.MinAge до @Model.MaxAge лет</span>
+</div>
+
+<div id="info">
+	Описание:
+	<pre style="font-size: 2rem;">
+		@Model.Info
+	</pre>
+</div>
+
+<div>
+	<h3><a href="/Hall/@Model.HallId">Наш зал</a></h3>
 	@foreach (var src in Model.HallImages)
 	{
 		<img style="width: 300px" src="@src" />
@@ -64,30 +86,27 @@
 	</div>
 	<div class="address-map map-closed">
 		<span id="toggle-map" class="show-map">Щелкните, для открытия карты</span>
-		<div id="map" class="map yandex-map">
-
-		</div>
+		<div id="map" class="map yandex-map"></div>
 	</div>
 	<!--Yandex map-->
 	<script>
-		var test;
 		!function () {
-			function loadYandexMap() {
-				var yaMap;
-				var coords = [@Model.Latitude.ToString().Replace(',', '.'), @Model.Longitude.ToString().Replace(',', '.')];
-				ymaps.ready(function () {
-					yaMap = new ymaps.Map('map', {
+				function loadYandexMap() {
+					var yaMap;
+					var coords = [@Model.Latitude.ToString().Replace(',', '.'), @Model.Longitude.ToString().Replace(',', '.')];
+					ymaps.ready(function () {
+						yaMap = new ymaps.Map('map', {
 						// При инициализации карты обязательно нужно указать
 						// её центр и коэффициент масштабирования.
 						center: coords,
-						zoom: 14
+						zoom: 15
 					}, {
-						searchControlProvider: 'yandex#search'
+							searchControlProvider: 'yandex#search'
 					});
 
-					var placeMark = new ymaps.Placemark(coords, {
+						var placeMark = new ymaps.Placemark(coords, {
 						balloonContentBody: '<div class="map-info">' + "@Model.HallName" + '</div>'
-					}, {
+						}, {
 						preset: "islands#redDotIcon"
 					});
 					yaMap.geoObjects.add(placeMark);
@@ -99,12 +118,12 @@
 
 			$("#toggle-map")
 				.one("click", function () {
-					loadYandexMap();
+				loadYandexMap();
 					$(this.parentNode)
 						.removeClass("map-closed")
 						.addClass("map-opened");
-					scroll();
-				});
+				scroll();
+			});
 			function scroll() {
 				var top = $(".address-text").get(0).offsetTop - 150;
 				$("body").animate({
@@ -121,15 +140,10 @@
 @section Styles{
 	<link href="~/Content/Search/workout.css" rel="stylesheet" />
 	<link href="~/Content/Search/workout_adaptive.css" rel="stylesheet" />
+	<link href="~/Content/Search/workoutmap.css" rel="stylesheet" />
 }
 
 <script>
-	function addScript(src, async) {
-		var script = document.createElement("script");
-		script.src = src;
-		if (async) script.async = true;
-		document.body.appendChild(script)
-	}
 	setTimeout(function () {
 		addScript("//api-maps.yandex.ru/2.1/?lang=ru_RU", true)
 	}, 1);

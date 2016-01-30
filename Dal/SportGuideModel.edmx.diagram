@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="01d4d3ceb8b54ca88a2b60f96be28440" Name="Diagram1" ZoomLevel="75">
+      <Diagram DiagramId="01d4d3ceb8b54ca88a2b60f96be28440" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="SportGuideContext.Category" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.Hall" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportGuideContext.KindOfSport" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
@@ -24,8 +24,8 @@
         <AssociationConnector Association="SportGuideContext.FK__User__city_id__04AFB25B" />
         <AssociationConnector Association="SportGuideContext.FK__User__gender__03BB8E22" />
         <AssociationConnector Association="SportGuideContext.FK__Hall__city_id__0697FACD" />
-        <EntityTypeShape EntityType="SportGuideContext.LoginSocialNetwork" Width="1.5" PointX="8.625" PointY="11.25" />
-        <EntityTypeShape EntityType="SportGuideContext.SocialNetwork" Width="1.5" PointX="6.375" PointY="11.375" />
+        <EntityTypeShape EntityType="SportGuideContext.LoginSocialNetwork" Width="1.5" PointX="7.5" PointY="11" />
+        <EntityTypeShape EntityType="SportGuideContext.SocialNetwork" Width="1.5" PointX="10.5" PointY="11.125" />
         <AssociationConnector Association="SportGuideContext.FK__LoginSoci__netwo__3DE82FB7" />
         <EntityTypeShape EntityType="SportGuideContext.Login" Width="1.5" PointX="2.125" PointY="11.25" />
         <AssociationConnector Association="SportGuideContext.FK__Login__id__52E34C9D" />

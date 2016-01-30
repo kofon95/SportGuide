@@ -9,7 +9,6 @@
 {
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true, "", new { @class="text-danger" })
-	@Html.HiddenFor(t => t.Id)
 	@*<select id="KindOfSportId" name="KindOfSportId" data-bind="options: kindsOfSports,
 		 optionsCaption:'Выберите категорию',
 		 optionsValue: 'id',
@@ -48,7 +47,7 @@
 
 		<hr />
 		<div>
-			Информация @Html.TextBoxFor(t => t.Info)
+			Информация @Html.TextAreaFor(t => t.Info)
 			@Html.ValidationMessageFor(t => t.Info, "", new { @class="text-danger" })
 		</div>
 		<div>
@@ -67,6 +66,14 @@
 				@Html.ValidationMessageFor(t => t.MaxAge, "", new { @class = "text-danger" })
 			</div>
 		</div>
+        <div>
+            Тренировка
+            <select name="@nameof(Model.GenderOfAthlete)">
+                <option value="">для всех</option>
+                <option value="m">мужская</option>
+                <option value="f">женская</option>
+            </select>
+        </div>
 		<br />
 		<div>
 			Время @Html.TextBoxFor(t => t.Time, new { type = "time" })
@@ -108,15 +115,15 @@
 }
 <script>
 	(function () {
-		$.get(getApiUrl("get/KindsOfSports"), function (response) {
+		$.get(getApiUrl("get/KindsOfSports?orderby="), function (response) {
 			var kindOfSportId = document.getElementById("KindOfSportId");
 			ko.applyBindings({ kindsOfSports: ko.observableArray(response) }, kindOfSportId);
 		});
-		$.get(getApiUrl("get/Halls"), function (response) {
+		$.get(getApiUrl("get/Halls?$orderby=hall_name"), function (response) {
 			var hallId = document.getElementById("HallId");
 			ko.applyBindings({ halls: ko.observableArray(response) }, document.getElementById("HallId"));
 		});
-		$.get(getApiUrl("get/Trainers"), function (response) {
+		$.get(getApiUrl("get/Trainers?$orderby=name"), function (response) {
 			var trainerId = document.getElementById("TrainerId");
 			ko.applyBindings({ trainers: ko.observableArray(response) }, document.getElementById("TrainerId"));
 		});

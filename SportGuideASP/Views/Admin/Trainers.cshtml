@@ -5,3 +5,55 @@
 
 <h2>Тренера</h2>
 
+
+<button id="get-trainer-list">Обновить список всех тренеров</button>
+<table class="records-model">
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Имя</td>
+			<td>Дата рождения</td>
+			<td>Телефон</td>
+			<td>Фото</td>
+			<td>Изменение</td>
+		</tr>
+	</thead>
+	<tbody id="full-trainer-list" data-bind="foreach: trainers">
+		<tr>
+			<td data-bind="text: id"></td>
+			<td><a data-bind="attr: {href: '/Trainer/' + id}, text: name"></a></td>
+			<td data-bind="text: birthday"></td>
+			<td data-bind="text: phone_number"></td>
+			<td><img style="height: 200px;" data-bind="attr: { src: photo_src }" /></td>
+			<td>
+				<a data-bind="attr: {href: '/Admin/UpdateTrainer/' + id + '?returnUrl=' + location.href}">Редактировать</a>
+				<a data-bind="attr: {href: '/Admin/DeleteTrainer/' + id}" onclick="return confirm('Удалить тренера и все его занятия?')">Удалить</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+<script>
+	(function () {
+		var trainersListViewModel = {
+			trainers: ko.observableArray([]),
+		};
+		ko.applyBindings(trainersListViewModel, document.getElementById("full-trainer-list"));
+
+		$("#get-trainer-list").click(function () {
+			$.get(getApiUrl("get/Trainers?$orderby=name"), function (trainers) {
+				trainersListViewModel.trainers(trainers);
+			});
+		}).trigger("click");
+	})();
+</script>
+
+
+@section Styles{
+	<link href="~/Content/Search/table.css" rel="stylesheet" />
+}
+@section Scripts{
+	<script src="~/Scripts/knockout-3.4.0.js"></script>
+}

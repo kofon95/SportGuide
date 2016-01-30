@@ -11,7 +11,7 @@
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true, "", new { @class="text-danger" })
 	<div>
-		@Html.TextBoxFor(t => t.Name)
+		@Html.TextBoxFor(t => t.Name, new { placeholder = "Имя" })
 		@Html.ValidationMessageFor(t => t.Name, "", new { @class = "text-danger" })
 	</div>
 	<div>
@@ -19,7 +19,7 @@
 		@Html.ValidationMessageFor(t => t.Birthday, "", new { @class = "text-danger" })
 	</div>
 	<div>
-		@Html.TextBoxFor(t => t.PhoneNumber)
+		@Html.TextBoxFor(t => t.PhoneNumber, new { placeholder="Телефонный номер" })
 	</div>
 	<div>
 		<input type="file" name="PhotoSrc" value="Photo" accept="image/*" />

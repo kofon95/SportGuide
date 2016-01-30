@@ -14,6 +14,7 @@
             <td>Вид спорта</td>
             <td>Время занятий</td>
             <td>Прочая информация</td>
+            <td>Пол</td>
         </tr>
     </thead>
     <tbody>
@@ -25,7 +26,12 @@
                 <td>@workout.CategoryName</td>
                 <td>@workout.TimeForWorkout</td>
                 <td>@workout.OtherInformation</td>
+                <td>@(workout.GenderOfAthlete == "m" ? "Мужской" : workout.GenderOfAthlete == "f" ? "Женский" : "Неважен")</td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+	$("#filter-type").val("workouts").trigger("change");
+</script>

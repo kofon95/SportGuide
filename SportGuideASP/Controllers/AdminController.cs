@@ -15,7 +15,7 @@ using static Utils.Consts;
 
 namespace SportGuideASP.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Authorize(Roles = "Moder,Admin")]
     public class AdminController : Controller
     {
@@ -70,7 +70,12 @@ namespace SportGuideASP.Controllers
                     city_id = hallvm.CityId,
                     description = hallvm.Description,
                 };
+
                 hall = _dm.Hall.Save(hall);
+
+                HallYandexMapLocation yaLocation = new HallYandexMapLocation { id = hall.id };
+                if (GetMapLocation(yaLocation, hallvm.LocationLatitude, hallvm.LocationLongitude))
+                    _dm.HallYandexMapLocation.Save(yaLocation);
 
                 HallImages[] imgs = new HallImages[fileNames.Length];
                 for (int i = 0; i < imgs.Length; i++)
@@ -87,6 +92,20 @@ namespace SportGuideASP.Controllers
                 return View();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        private static bool GetMapLocation(HallYandexMapLocation yaLocation, string latitudeStr, string longitudeStr)
+        {
+            double longitude, latitude;
+            if (double.TryParse(latitudeStr?.Replace(".", ","), out latitude) &&
+                double.TryParse(longitudeStr?.Replace(".", ","), out longitude))
+            {
+                yaLocation.latitude = latitude;
+                yaLocation.longitude = longitude;
+                return true;
+            }
+            else
+                return false;
         }
 
         [HttpGet]
@@ -108,6 +127,7 @@ namespace SportGuideASP.Controllers
             {
                 hall_id = workout.HallId,
                 trainer_id = workout.TrainerId,
+                gender_of_athlete = workout.GenderOfAthlete,
                 info = workout.Info,
                 kind_of_sport_id = workout.KindOfSportId,
                 min_age = workout.MinAge,
@@ -175,7 +195,7 @@ namespace SportGuideASP.Controllers
         #region Update
 
         [HttpGet]
-        public ActionResult UpdateHall(int id)
+        public ActionResult UpdateHall(int id, string returnUrl)
         {
             var h = _dm.Hall.GetAll().Include(t=>t.HallImages).First(t=>t.id ==id);
             var hallVM = new AdminViewModel.HallAddUpdate
@@ -186,11 +206,17 @@ namespace SportGuideASP.Controllers
                 Images= h.HallImages.Select(t=>t.src),
                 Name=h.hall_name,
             };
+            if (h.HallYandexMapLocation != null)
+            {
+                hallVM.LocationLatitude = h.HallYandexMapLocation.latitude.ToString().Replace(",", ".");
+                hallVM.LocationLongitude = h.HallYandexMapLocation.longitude.ToString().Replace(",", ".");
+            }
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(hallVM);
         }
         [HttpPost]
-        public ActionResult UpdateHall(int id, AdminViewModel.HallAddUpdate hallVM)
+        public ActionResult UpdateHall(int id, AdminViewModel.HallAddUpdate hallVM, string returnUrl)
         {
             Hall hall = _dm.Hall.GetAll().Include(t => t.HallImages).First(t => t.id == id);
             hall.address = hallVM.Address;
@@ -198,19 +224,28 @@ namespace SportGuideASP.Controllers
             hall.description = hallVM.Description;
             hall.hall_name = hallVM.Name;
 
+            if (hallVM.LocationLatitude != null && hallVM.LocationLongitude != null)
+            {
+                if (hall.HallYandexMapLocation == null)
+                    hall.HallYandexMapLocation = new HallYandexMapLocation {id=id };
+                GetMapLocation(hall.HallYandexMapLocation, hallVM.LocationLatitude, hallVM.LocationLongitude);
+            }
             _dm.Hall.Update(hall);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public ActionResult UpdateWorkout(int id)
+        public ActionResult UpdateWorkout(int id, string returnUrl)
         {
             var w = _dm.Workout.GetById(id);
             var workoutVM = new AdminViewModel.WorkoutAddUpdate
             {
-                Id = w.id,
                 Info = w.info,
                 HallId = w.hall_id,
+                GenderOfAthlete = w.gender_of_athlete,
                 KindOfSportId = w.kind_of_sport_id,
                 PaymentForMonth = w.paiment_for_month,
                 TrainerId = w.trainer_id,
@@ -225,15 +260,17 @@ namespace SportGuideASP.Controllers
                 Sat = w.sat,
                 Sun = w.sun,
             };
+            ViewBag.ReturnUrl = returnUrl;
             return View(workoutVM);
         }
         [HttpPost]
-        public ActionResult UpdateWorkout(int id, AdminViewModel.WorkoutAddUpdate workoutVM)
+        public ActionResult UpdateWorkout(int id, AdminViewModel.WorkoutAddUpdate workoutVM, string returnUrl)
         {
             var w = workoutVM;
             Workout workout = _dm.Workout.GetById(id);
             workout.info = w.Info;
             workout.hall_id = w.HallId;
+            workout.gender_of_athlete = w.GenderOfAthlete;
             workout.kind_of_sport_id = w.KindOfSportId;
             workout.paiment_for_month = w.PaymentForMonth;
             workout.trainer_id = w.TrainerId;
@@ -249,23 +286,26 @@ namespace SportGuideASP.Controllers
             workout.sun = w.Sun;
 
             _dm.Workout.Update(workout);
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("Index");
         }
         
         [HttpGet]
-        public ActionResult UpdateTrainer(int id)
+        public ActionResult UpdateTrainer(int id, string returnUrl)
         {
             var trainer = _dm.Trainer.GetById(id);
             var trainerVM = new AdminViewModel.TrainerAddUpdate
             {
-                Id = trainer.id,
                 Name = trainer.name,
                 Birthday = trainer.birthday,
                 PhoneNumber = trainer.phone_number,
             };
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(trainerVM);
         }
-        public ActionResult UpdateTrainer(AdminViewModel.TrainerAddUpdate trainer)
+        public ActionResult UpdateTrainer(int id, AdminViewModel.TrainerAddUpdate trainer, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -274,12 +314,14 @@ namespace SportGuideASP.Controllers
                 return View();
             }
 
-            var oldTrainer = _dm.Trainer.GetById(trainer.Id);
+            var oldTrainer = _dm.Trainer.GetById(id);
             oldTrainer.name = trainer.Name;
             oldTrainer.phone_number = trainer.PhoneNumber;
             oldTrainer.birthday = trainer.Birthday;
             _dm.Trainer.Update(oldTrainer);
 
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("Index");
         }
 
@@ -314,39 +356,24 @@ namespace SportGuideASP.Controllers
                 .Include(t => t.Workout)
                 .Where(t=>t.id == id)
                 .First();
-
+            
             _dm.Workout.Delete(trainer.Workout);
             _dm.Trainer.Delete(trainer);
+            if (System.IO.File.Exists(FilePaths.TrainerImageSource + trainer.photo_src))
+                System.IO.File.Delete(FilePaths.TrainerImageSource + trainer.photo_src);
             return Redirect(Request.UrlReferrer?.AbsoluteUri ?? "/");
         }
 
         #endregion
-
-        #region Search
+        
 
         [HttpGet]
-        public ActionResult Halls()
-        {
-            //Roles.GetRolesForUser();
-            //Roles.GetAllRoles();
-
-            return View();
-        }
-        [HttpGet]
-        public ActionResult Workouts()
+        public ActionResult Multi()
         {
             return View();
         }
         [HttpGet]
         public ActionResult Trainers()
-        {
-            return View();
-        }
-
-        #endregion
-
-        [HttpGet]
-        public ActionResult Multi()
         {
             return View();
         }

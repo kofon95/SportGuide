@@ -10,6 +10,28 @@ namespace SportGuideASP
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "SearchTrainers",
+                url: "GetTrainers/{s}",
+                defaults: new
+                {
+                    controller = "Search",
+                    action = "GetTrainers",
+                    s = UrlParameter.Optional,
+                }
+            );
+
+            routes.MapRoute(
+                name: "SearchHalls",
+                url: "GetHalls/{s}",
+                defaults: new
+                {
+                    controller = "Search",
+                    action = "GetHalls",
+                    s = UrlParameter.Optional,
+                }
+            );
+
+            routes.MapRoute(
                 name: "Search",
                 url: "Search/{s}/{category_id}/{kind_id}",
                 defaults: new
@@ -23,13 +45,31 @@ namespace SportGuideASP
             );
 
             routes.MapRoute(
+                name: "Trainer",
+                url: "Trainer/{id}",
+                defaults: new
+                {
+                    controller = "Search",
+                    action = "Trainer",
+                }
+            );
+            routes.MapRoute(
+                name: "Hall",
+                url: "Hall/{id}",
+                defaults: new
+                {
+                    controller = "Search",
+                    action = "Hall",
+                }
+            );
+
+            routes.MapRoute(
                 name: "Workout",
                 url: "Workout/{id}",
                 defaults: new
                 {
                     controller = "Search",
                     action = "Workout",
-                    id = UrlParameter.Optional,
                 }
             );
 

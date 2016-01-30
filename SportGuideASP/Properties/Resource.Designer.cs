@@ -88,7 +88,7 @@ namespace SportGuideASP.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Введите не менее {2} символов.
+        ///   Looks up a localized string similar to Введите не менее {2} символов и не более {1}.
         /// </summary>
         internal static string MinimumSymbols {
             get {

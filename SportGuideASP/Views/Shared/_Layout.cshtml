@@ -16,9 +16,14 @@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 	<script>
 		function getApiUrl(path){ return location.origin + "/api/" + (path||""); };
+		function addScript(src, async) {
+			var script = document.createElement("script");
+			script.src = src;
+			if (async) script.async = true;
+			document.body.appendChild(script)
+		}
 	</script>
     <script src="~/Scripts/common.js"></script>
-    <script src="~/Scripts/filter_ajax.js"></script>
 	@RenderSection("Scripts", false)
 </head>
 <body>
@@ -31,40 +36,52 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Sport Guide", "Index", "Common", new { area = "" }, new { @class = "navbar-brand" })
-                @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline" }))
+                @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { id="global-search", @class = "form-inline" }))
 				{
                     <div class="form-group no-active">
                         <div>
                             <input id="search" class="form-control search" type="text" name="s" value="@Request.Params["s"]" placeholder="Поиск" />
                             <input class="btn btn-default search-btn" type="submit" value="Найти" />
                         </div>
-                        <div>
+                        <div id="wrapper-filter-selects" style="opacity: 0">
+                            <span>
+                                <select id="gender-select" name="gender">
+                                    <option value="" selected>Для всех</option>
+                                    <option value="m">Мужской спорт</option>
+                                    <option value="f">Женский спорт</option>
+                                </select>
+                            </span>
                             <span class="wrapper-select">
-                                <select id="sport-category" name="categoryId" class="select-sport-category">
-                                    <option value="">Любая категория</option>
+                                <select id="filter-type" class="select-sport-category">
+                                    <option style="background-color: #F3F3F3;" value="workouts" selected>Тип тренировки</option>
+                                    <option style="background-color: #F3F3F3;" value="halls">Место</option>
+                                    <option style="background-color: #F3F3F3;" value="trainers">Тренер</option>
+                                </select>
+                            </span>
+                                <span>
+                                <select id="sport-category" name="categoryId">
+                                    <option style="background-color: #F3F3F3;" value="">Любой вид спорта</option>
                                     @foreach (var cat in StaticData.Categories)
-									{
+                                    {
                                         <option value="@cat.id">@cat.category_name</option>
-									}
+                                    }
                                 </select>
                             </span>
                             <span id="kind-of-sport-container" class="wrapper-select"></span>
                         </div>
+						<script src="~/Scripts/user/filter_ajax.js"></script>
                         <script>
 							// init select elem of category by "get parameter"
 							!function () {
+								$("#wrapper-filter-selects").animate({opacity: 1}, "fast");
+								// sets in each page
+								//var filterType = document.getElementById("filter-type");
+
 								var categs = document.getElementById("sport-category");
-								categs.value = @{
-									string catId = Request.Params["categoryId"];
-									if (string.IsNullOrEmpty(catId))
-									{
-										@MvcHtmlString.Create("''")
-									}
-									else
-									{
-										@catId
-									}
-                                };
+								categs.value = "@Request.Params["categoryId"]";
+
+							    var gender = document.getElementById("gender-select");
+							    gender.value = "@Request.Params["gender"]";
 
 								// on change of select elem
 								$(document).ready(function() {
@@ -98,6 +115,8 @@
 
         </div>
     </div>
+
+	@RenderSection("BeforeRenderBody", false)
 
     <div class="container body-content">
         @RenderBody()

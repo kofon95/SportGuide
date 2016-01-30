@@ -127,7 +127,7 @@
     <value>Изображение {0} не поддерживается</value>
   </data>
   <data name="MinimumSymbols" xml:space="preserve">
-    <value>Введите не менее {2} символов</value>
+    <value>Введите не менее {2} символов и не более {1}</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>

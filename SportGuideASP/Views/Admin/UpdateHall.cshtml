@@ -6,7 +6,7 @@
 
 <h2>Заведение</h2>
 
-@using (Html.BeginForm("UpdateHall", "Admin", FormMethod.Post, new { enctype= "multipart/form-data" }))
+@using (Html.BeginForm("UpdateHall", "Admin", FormMethod.Post, new { enctype= "multipart/form-data", id = "form-with-returnUrl", data_return_url = "?returnUrl=" + ViewBag.ReturnUrl }))
 {
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true, "Ошибка", new { @class = "text-danger" })
@@ -31,13 +31,16 @@
 	</div>
 	<div>
 		<span>Описание</span>
-		<span>@Html.TextBoxFor(t => t.Description)</span>
+		<span>@Html.TextAreaFor(t => t.Description)</span>
 	</div>
 	<div>
 		<span></span>
 		<span><input type="file" name="Images" multiple value="Изображения" accept="image/*" /></span>
 		@Html.ValidationMessageFor(t => t.Images, "", new { @class = "text-danger col-md-4 validation-message" })
 	</div>
+	<div id="map" style="width: 640px; height: 360px"></div>
+	@Html.HiddenFor(t => t.LocationLatitude)
+	@Html.HiddenFor(t => t.LocationLongitude)
 	<div>
 		<input type="submit" value="Сохранить изменения" />
 	</div>
@@ -58,12 +61,37 @@
 	<script src="~/Scripts/jquery.validate.min.js"></script>
 	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/Scripts/knockout-3.4.0.js"></script>
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 }
 <script>
 	(function () {
+		var cityId = @Model.CityId;
+
 		$.get(getApiUrl("get/cities?$orderby=Republic/name"), function (response) {
+			var cityIdElem = document.getElementById("CityId");
 			var cities = ko.observableArray(response);
-			ko.applyBindings({ cities: cities }, document.getElementById("CityId"));
+			ko.applyBindings({ cities: cities }, cityIdElem);
+			cityIdElem.value = cityId;
 		});
 	})();
+</script>
+
+<script src="~/Scripts/user/form_returnurl.js"></script>
+
+<!--Yandex map-->
+<script src="~/Scripts/user/yamap/yamapinit.js"></script>
+<script>
+	YaMap.coords = [42.979618, 47.490981];
+	YaMap.startMap()
+			.then(function () {
+				@if (Model.LocationLatitude == null || Model.LocationLongitude == null) {
+					@("return;")
+				}
+				var placeMark = new ymaps.Placemark([@Model.LocationLatitude, @Model.LocationLongitude], {
+					balloonContentBody: '<div class="map-info">' + "@Model.Address" + '</div>'
+				}, {
+					preset: "islands#redDotIcon"
+				});
+				YaMap.map.geoObjects.add(placeMark);
+			});
 </script>

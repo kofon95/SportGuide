@@ -86,7 +86,7 @@ namespace SportGuideWebAPI.Controllers.v1
                     t.hall_name,
                     t.id,
                     City = new { t.City.id, t.City.name },
-                    HallImages = t.HallImages.Select(i => new { i.id, src = i.src == null ? null : i.src }),
+                    HallImages = t.HallImages.Select(i => new { i.id, src = i.src == null ? null : UrlPaths.HallImageSource + i.src }),
                     PhoneOfHall = t.PhoneOfHall.Select(p => new { p.id, p.phone_number }),
                     HallYandexMapLocation = t.HallYandexMapLocation == null ? null : new
                     {
@@ -113,6 +113,7 @@ namespace SportGuideWebAPI.Controllers.v1
                     .Select(t => new
                     {
                         t.id,
+                        t.gender_of_athlete,
                         t.paiment_for_month,
                         t.min_age,
                         t.max_age,

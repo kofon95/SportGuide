@@ -5,11 +5,10 @@
 }
 
 <h2>Занятие</h2>
-@using (Html.BeginForm("UpdateWorkout", "Admin"))
+@using (Html.BeginForm("UpdateWorkout", "Admin", FormMethod.Post, new { id = "form-with-returnUrl", data_return_url = "?returnUrl=" + ViewBag.ReturnUrl }))
 {
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true, "", new { @class="text-danger" })
-	@Html.HiddenFor(t => t.Id)
 	@*<select id="KindOfSportId" name="KindOfSportId" data-bind="options: kindsOfSports,
 		 optionsCaption:'Выберите категорию',
 		 optionsValue: 'id',
@@ -51,7 +50,7 @@
 
 		<hr />
 		<div>
-			Информация @Html.TextBoxFor(t => t.Info)
+			Информация @Html.TextAreaFor(t => t.Info)
 			@Html.ValidationMessageFor(t => t.Info, "", new { @class="text-danger" })
 		</div>
 		<div>
@@ -72,6 +71,12 @@
 		</div>
 		<br />
 		<div>
+            Тренировка
+            <select name="@nameof(Model.GenderOfAthlete)">
+                <option value="">для всех</option>
+                <option value="m" @(Model.GenderOfAthlete == "m" ? "selected" : "")>мужская</option>
+                <option value="f" @(Model.GenderOfAthlete == "f" ? "selected" : "")>женская</option>
+            </select>
 			Время @Html.TextBoxFor(t => t.Time, new { type = "time" })
 			@Html.ValidationMessageFor(t => t.Time, "", new { @class = "text-danger" })
 		</div>
@@ -104,11 +109,7 @@
 <div>@Html.ActionLink("Назад", "Index")</div>
 
 
-@section Scripts{
-	<script src="~/Scripts/jquery.validate.min.js"></script>
-	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-	<script src="~/Scripts/knockout-3.4.0.js"></script>
-}
+<script src="~/Scripts/user/form_returnurl.js"></script>
 <script>
 	(function () {
 		$.get(getApiUrl("get/KindsOfSports"), function (response) {
@@ -128,3 +129,10 @@
 		});
 	})();
 </script>
+
+
+@section Scripts{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/knockout-3.4.0.js"></script>
+}

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SportGuideASP.Core.ViewModels
 {
@@ -12,22 +10,24 @@ namespace SportGuideASP.Core.ViewModels
         public class HallAddUpdate
         {
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
-            [StringLength(20, MinimumLength =2, ErrorMessageResourceName =nameof(Resource.MinimumSymbols), ErrorMessageResourceType =typeof(Resource))]
+            [StringLength(40, MinimumLength =2, ErrorMessageResourceName =nameof(Resource.MinimumSymbols), ErrorMessageResourceType =typeof(Resource))]
             public string Name { get; set; }
 
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType =typeof(Resource))]
             public string Address { get; set; }
             public int CityId { get; set; }
             public string Description { get; set; }
-            
+
+            public string LocationLongitude { get; set; }
+            public string LocationLatitude { get; set; }
+
             public IEnumerable<string> Images { get; set; }
         }
 
         public class WorkoutAddUpdate
         {
-            public int Id;
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
-            [StringLength(20, MinimumLength = 5, ErrorMessageResourceName = nameof(Resource.MinimumSymbols), ErrorMessageResourceType = typeof(Resource))]
+            [StringLength(255, MinimumLength = 5, ErrorMessageResourceName = nameof(Resource.MinimumSymbols), ErrorMessageResourceType = typeof(Resource))]
             public string Info { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.ChooseSomething), ErrorMessageResourceType = typeof(Resource))]
             public int KindOfSportId { get; set; }
@@ -42,8 +42,8 @@ namespace SportGuideASP.Core.ViewModels
             public short MinAge { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredNumber), ErrorMessageResourceType = typeof(Resource))]
             public short MaxAge { get; set; }
-            //[Required(ErrorMessage ="Wrong time")]
             public TimeSpan? Time { get; set; }
+            public string GenderOfAthlete { get; set; }
 
             public bool Mon { get; set; }
             public bool Tue { get; set; }
@@ -56,9 +56,8 @@ namespace SportGuideASP.Core.ViewModels
 
         public class TrainerAddUpdate
         {
-            public int Id { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
-            [StringLength(20, MinimumLength = 3, ErrorMessageResourceName = nameof(Resource.MinimumSymbols), ErrorMessageResourceType = typeof(Resource))]
+            [StringLength(40, MinimumLength = 3, ErrorMessageResourceName = nameof(Resource.MinimumSymbols), ErrorMessageResourceType = typeof(Resource))]
             public string Name { get; set; }
             [Required(ErrorMessageResourceName = nameof(Resource.RequiredField), ErrorMessageResourceType = typeof(Resource))]
             public DateTime Birthday { get; set; }

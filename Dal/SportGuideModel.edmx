@@ -139,6 +139,7 @@
           <Property Name="info" Type="nvarchar" MaxLength="256" />
           <Property Name="hall_id" Type="int" Nullable="false" />
           <Property Name="kind_of_sport_id" Type="int" Nullable="false" />
+          <Property Name="gender_of_athlete" Type="char" MaxLength="1" />
           <Property Name="trainer_id" Type="int" />
           <Property Name="paiment_for_month" Type="int" Nullable="false" />
           <Property Name="min_age" Type="smallint" Nullable="false" />
@@ -284,7 +285,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__hall_id__3F9B6DFF">
+        <Association Name="FK__Workout__hall_id__52AE4273">
           <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
@@ -296,7 +297,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__kind_of__3DB3258D">
+        <Association Name="FK__Workout__kind_of__50C5FA01">
           <End Role="KindOfSport" Type="Self.KindOfSport" Multiplicity="1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
@@ -308,7 +309,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workout__trainer__3EA749C6">
+        <Association Name="FK__Workout__trainer__51BA1E3A">
           <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
           <End Role="Workout" Type="Self.Workout" Multiplicity="*" />
           <ReferentialConstraint>
@@ -381,15 +382,15 @@
             <End Role="UserGender" EntitySet="UserGender" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__hall_id__3F9B6DFF" Association="Self.FK__Workout__hall_id__3F9B6DFF">
+          <AssociationSet Name="FK__Workout__hall_id__52AE4273" Association="Self.FK__Workout__hall_id__52AE4273">
             <End Role="Hall" EntitySet="Hall" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__kind_of__3DB3258D" Association="Self.FK__Workout__kind_of__3DB3258D">
+          <AssociationSet Name="FK__Workout__kind_of__50C5FA01" Association="Self.FK__Workout__kind_of__50C5FA01">
             <End Role="KindOfSport" EntitySet="KindOfSport" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workout__trainer__3EA749C6" Association="Self.FK__Workout__trainer__3EA749C6">
+          <AssociationSet Name="FK__Workout__trainer__51BA1E3A" Association="Self.FK__Workout__trainer__51BA1E3A">
             <End Role="Trainer" EntitySet="Trainer" />
             <End Role="Workout" EntitySet="Workout" />
           </AssociationSet>
@@ -464,6 +465,7 @@
           <NavigationProperty Name="Hall" Relationship="Self.FK__Workout__hall_id__02084FDA" FromRole="Workout" ToRole="Hall" />
           <NavigationProperty Name="KindOfSport" Relationship="Self.FK__Workout__kind_of__02FC7413" FromRole="Workout" ToRole="KindOfSport" />
           <NavigationProperty Name="Trainer" Relationship="SportGuideContext.FK__Workout__trainer__3EA749C6" FromRole="Workout" ToRole="Trainer" />
+          <Property Name="gender_of_athlete" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK__KindOfSpo__categ__34C8D9D1">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
@@ -862,6 +864,7 @@
           <EntitySetMapping Name="Workout">
             <EntityTypeMapping TypeName="SportGuideContext.Workout">
               <MappingFragment StoreEntitySet="Workout">
+                <ScalarProperty Name="gender_of_athlete" ColumnName="gender_of_athlete" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="hall_id" ColumnName="hall_id" />
                 <ScalarProperty Name="kind_of_sport_id" ColumnName="kind_of_sport_id" />

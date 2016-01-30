@@ -1,9 +1,25 @@
 ﻿var test;
-$(document).ready(function () {
+(function () {
     var categories = $("#sport-category");
     var kindOfSportContainer = $("#kind-of-sport-container");
-
-    categories.on("change", function (e) {
+	var globalSearch = document.getElementById("global-search");
+	var genderSelect = document.getElementById("gender-select");
+        
+	$("#filter-type").on("change", function() {
+	    switch (this.value) {
+	        case "workouts":
+	            globalSearch.action = "/Search";
+	            break;
+	        case "trainers":
+	            globalSearch.action = "/GetTrainers";
+	            break;
+	        case "halls":
+	            globalSearch.action = "/GetHalls";
+	            break;
+	    }
+	});
+    
+	categories.on("change", function (e) {
         if (this.value.length === 0) {
             kindOfSportContainer.html("");
             return;
@@ -29,4 +45,4 @@ $(document).ready(function () {
     function getCategoryUrl(param) {
         return location.origin + "/_Data/GetKindsOfSportByCategoryId/" + encodeURIComponent(param);
     }
-});
+})();

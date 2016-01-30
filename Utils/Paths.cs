@@ -10,14 +10,14 @@ namespace Utils
         public static class UrlPaths
         {
             public const string GlobalSource = "/source/";
-            public const string TrainerImageSource = GlobalSource + "img-data/";
-            public const string HallImageSource = GlobalSource + "img-data/";
+            public const string TrainerImageSource = GlobalSource + "img-data/trainer/";
+            public const string HallImageSource = GlobalSource + "img-data/hall/";
         }
         public static class FilePaths
         {
             public const string GlobalSource = "~/source/";
-            public const string TrainerImageSource = GlobalSource + "img-data/";
-            public const string HallImageSource = GlobalSource + "img-data/";
+            public const string TrainerImageSource = GlobalSource + "img-data/trainer/";
+            public const string HallImageSource = GlobalSource + "img-data/hall/";
         }
 
 
