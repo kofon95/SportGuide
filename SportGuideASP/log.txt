@@ -1,0 +1,8 @@
+Info ---- 2016-01-30 23:44:04.0248 
+SportGuideASP.MvcApplication.Application_Start 
+===> Start application <=== 
+
+Debug ---- 2016-01-30 23:44:04.5051 
+SportGuideASP.StaticData.Reset 
+===> Reset categories data <=== 
+

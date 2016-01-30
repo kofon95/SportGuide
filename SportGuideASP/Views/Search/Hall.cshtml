@@ -1,0 +1,71 @@
+﻿@model SportGuideASP.Core.ViewModels.SearchViewModel.Hall
+
+@{
+	ViewBag.Title = "Hall";
+}
+
+<h2>Hall</h2>
+
+<div>
+	Название:
+	@Model.Name
+</div>
+
+<div>
+	Адрес:
+	@Model.Address
+</div>
+
+<div>
+	Город:
+	@Model.CityName
+</div>
+
+<div>
+	Описание:
+	@Model.Description
+</div>
+
+<div>
+	Картинки:
+	<br />
+	@foreach (var image in Model.Images)
+	{
+		<img style="width: 360px;" src="@image" />
+	}
+</div>
+
+<div>
+	Телефонные номера:
+	<ul>
+	@foreach (var phone in Model.PhoneNumbers)
+	{
+		<li>
+			@phone
+		</li>
+	}
+	</ul>
+</div>
+
+<div>
+	<h3>В этом заведении проводятся:</h3>
+	<ul>
+		@foreach (var workout in Model.Workouts)
+		{
+			<li>
+				<hr />
+				<div>
+					@Html.ActionLink(workout.CategoryName, "Index", new { categoryId = workout.CategoryId })
+					&gt;
+					@Html.ActionLink(workout.KindOfSport, "Index", new { categoryId = workout.CategoryId, kindOfSportId = workout.KindOfSportId })
+				</div>
+				<h3><a href="/Workout/@workout.Id">@workout.Info</a></h3>
+				<div>Тренер: <a href="/Trainer/@workout.TrainerId">@workout.TrainerName</a></div>
+				<div>
+					Пол:
+					@Html.ActionLink(workout.GenderOfAthlete == "m" ? "мужской" : workout.GenderOfAthlete == "f" ? "женский" : "неважен", "Index", new { gender = workout.GenderOfAthlete })
+				</div>
+			</li>
+		}
+	</ul>
+</div>

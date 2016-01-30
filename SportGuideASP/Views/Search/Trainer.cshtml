@@ -1,0 +1,58 @@
+﻿@model SportGuideASP.Core.ViewModels.SearchViewModel.Trainer
+
+@{
+	ViewBag.Title = "Trainer";
+}
+
+<h2>Trainer</h2>
+
+<div>
+	Имя:
+	@Model.Name
+</div>
+
+<div>
+	Дата рождения:
+	@Model.Birthday.ToShortDateString()
+</div>
+
+<div>
+	Телефон:
+	@Model.PhoneNumber
+</div>
+
+<div>
+	<img style="width: 300px;" src="@Model.PhotoSrc" />
+</div>
+
+@{
+	var workouts = Model.Workouts.ToArray();
+	if (workouts.Length == 0)
+	{
+		<h3>На данный момент этот тренер не ведёт занятий</h3>
+	}
+	else {
+		<h3>Этот тренер также ведёт следующие занятия:</h3>
+		<ul>
+			@foreach (var workout in workouts)
+			{
+				<li>
+					@{
+						string image = workout.HallImages.FirstOrDefault();
+						if (image != null)
+						{
+							<a href="/Workout/@workout.Id">
+								<img style="width: 300px;" src="@image" />
+							</a>
+						}
+					}
+					@Html.ActionLink(workout.Info, "Workout", new { workout.Id })
+					<span>
+						Пол:
+						@(workout.GenderOfAthlete == "m" ? "мужской" : workout.GenderOfAthlete == "женский" ? "f" : "неважен")
+					</span>
+				</li>
+			}
+		</ul>
+	}
+}

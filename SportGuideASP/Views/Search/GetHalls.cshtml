@@ -1,0 +1,122 @@
+﻿@model IList<SearchViewModel.GetHalls>
+
+@{
+	ViewBag.Title = "Поиск заведений";
+}
+
+<h2>Заведений нашлось @Model.Count</h2>
+
+<div id="hall">
+	@foreach (var hall in Model)
+	{
+		<hr />
+		<div>
+			<h2><a href="/Hall/@hall.Id">@hall.Name</a></h2>
+		</div>
+		<div>
+			@{
+				string src = hall.HallImages?.FirstOrDefault();
+				if (src != null)
+				{
+					<a href="/Hall/@hall.Id">
+						<img style="max-width: 300px;" src="@src" />
+					</a>
+				}
+				else {
+					<h3>Фото отсутствует</h3>
+				}
+			}
+		</div>
+
+		<div>
+			@hall.Address
+		</div>
+
+		<div>
+			@hall.CityName
+		</div>
+
+		<div>
+			@hall.Description
+		</div>
+		<input type="hidden"
+			   data-id="@hall.Id"
+			   data-name="@hall.Name" 
+			   data-longitude="@(hall.LocationLongitude?.ToString()?.Replace(",", "."))" 
+			   data-latitude="@(hall.LocationLatitude?.ToString()?.Replace(",", "."))" 
+			   class="yandex-location" value="@hall.Name" />
+	}
+</div>
+
+<div class="address-map map-closed">
+	<span id="toggle-map" class="show-map">Щелкните, для открытия карты</span>
+	<div id="map" class="map yandex-map"></div>
+</div>
+
+
+<script>
+	$("#filter-type").val("halls").trigger("change");
+
+	setTimeout(function () {
+		addScript("//api-maps.yandex.ru/2.1/?lang=ru_RU", true)
+	}, 1);
+
+	!function () {
+		function loadYandexMap() {
+			var yaMap;
+			var coords = [42.98, 47.5];
+			ymaps.ready(function () {
+				yaMap = new ymaps.Map('map', {
+					// При инициализации карты обязательно нужно указать
+					// её центр и коэффициент масштабирования.
+					center: coords,
+					zoom: 13
+				}, {
+					searchControlProvider: 'yandex#search'
+				});
+
+				var fields = $("#hall").children(".yandex-location");
+				for (var i = 0; i < fields.length; i++) {
+					var data = fields[i].dataset;
+					var id = data.id;
+					var name = data.name;
+
+					if (!data.latitude || !data.longitude)
+						continue;
+
+					var coordsPlaceMark = [data.latitude, data.longitude];
+
+					var placeMark = new ymaps.Placemark(coordsPlaceMark, {
+						balloonContentBody: '<div class="map-info">' + name + '</div>'
+					}, {
+						preset: "islands#redDotIcon"
+					});
+					yaMap.geoObjects.add(placeMark);
+				}
+			})
+
+
+			//yaMap.destroy();
+		};
+
+		$("#toggle-map")
+			.one("click", function () {
+				loadYandexMap();
+				$(this.parentNode)
+					.removeClass("map-closed")
+					.addClass("map-opened");
+				scroll();
+			});
+		function scroll() {
+			var top = $("#map").get(0).offsetTop - 150;
+			$("body").animate({
+				scrollTop: top,
+			}, "fast", 'linear')
+		}
+	}()
+</script>
+
+@section Styles{
+	<link href="~/Content/Search/workout.css" rel="stylesheet" />
+	<link href="~/Content/Search/workoutmap.css" rel="stylesheet" />
+}

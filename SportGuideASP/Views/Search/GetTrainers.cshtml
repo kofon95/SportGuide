@@ -1,0 +1,34 @@
+﻿@model IList<Dal.Trainer>
+
+@{
+    ViewBag.Title = "Поиск тренеров";
+}
+
+<h2>Тренеров нашлось @Model.Count</h2>
+
+<ul class="trainers">
+	@foreach (var trainer in Model)
+	{
+		<li>
+			<div>Имя: @Html.ActionLink(trainer.name, "Trainer", new { id=trainer.id })</div>
+			<div>Имя: @trainer.phone_number</div>
+			@if (trainer.photo_src != null){
+				<div><a href="/Trainer/@trainer.id"><img style="width: 300px;" src="@ViewBag.PrefixTrainerImage@trainer.photo_src" /></a></div>
+			}
+		</li>
+	}
+</ul>
+
+
+@section Styles{
+	<style>
+		.trainers > *{
+			margin: 20px 0px;
+			border: 1px solid black;
+		}
+	</style>
+}
+
+<script>
+	$("#filter-type").val("trainers").trigger("change");
+</script>
